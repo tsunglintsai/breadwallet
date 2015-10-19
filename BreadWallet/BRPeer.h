@@ -63,6 +63,12 @@
 #define MSG_ALERT       @"alert"
 #define MSG_REJECT      @"reject" // described in BIP61: https://github.com/bitcoin/bips/blob/master/bip-0061.mediawiki
 
+#define REJECT_INVALID     0x10 // transaction is invalid for some reason (invalid signature, output value > input, etc)
+#define REJECT_SPENT       0x12 // an input is already spent
+#define REJECT_NONSTANDARD 0x40 // not mined/relayed because it is "non-standard" (type or version unknown by server)
+#define REJECT_DUST        0x41 // one or more output amounts are below the 'dust' threshold
+#define REJECT_LOWFEE      0x42 // transaction does not have enough fee/priority to be relayed or mined
+
 typedef union _UInt256 UInt256;
 typedef union _UInt128 UInt128;
 
@@ -81,6 +87,7 @@ typedef union _UInt128 UInt128;
 // called when the peer relays either a merkleblock or a block header, headers will have 0 totalTransactions
 - (void)peer:(BRPeer *)peer relayedBlock:(BRMerkleBlock *)block;
 
+- (void)peer:(BRPeer *)peer notfoundTxHashes:(NSArray *)txHashes andBlockHashes:(NSArray *)blockhashes;
 - (BRTransaction *)peer:(BRPeer *)peer requestedTransaction:(UInt256)txHash;
 
 @end

@@ -46,12 +46,12 @@
 #define TICKER_URL     @"https://bitpay.com/rates"
 #define FEE_PER_KB_URL @"https://api.breadwallet.com/v1/fee-per-kb"
 
-#define SEED_ENTROPY_LENGTH    (128/8)
-#define SEC_ATTR_SERVICE       @"org.voisine.breadwallet"
-#define DEFAULT_CURRENCY_CODE  @"USD"
-#define DEFAULT_SPENT_LIMIT    SATOSHIS
-#define DEFAULT_FEE_PER_KB     (4096*1000/225) // fee required by eligius pool, which supports child-pays-for-parent
-#define MAX_FEE_PER_KB         (100100*1000/225) // slightly higher than a 1000bit fee on a typical 225byte transaction
+#define SEED_ENTROPY_LENGTH   (128/8)
+#define SEC_ATTR_SERVICE      @"org.voisine.breadwallet"
+#define DEFAULT_CURRENCY_CODE @"USD"
+#define DEFAULT_SPENT_LIMIT   SATOSHIS
+#define DEFAULT_FEE_PER_KB    ((TX_FEE_PER_KB*1000 + 190)/191) // default fee-per-kb to match standard fee on 191byte tx
+#define MAX_FEE_PER_KB        ((100100*1000 + 190)/191) // slightly higher than a 1000bit fee on 191byte tx
 
 #define LOCAL_CURRENCY_CODE_KEY @"LOCAL_CURRENCY_CODE"
 #define CURRENCY_CODES_KEY      @"CURRENCY_CODES"
@@ -68,6 +68,7 @@
 #define PIN_KEY             @"pin"
 #define PIN_FAIL_COUNT_KEY  @"pinfailcount"
 #define PIN_FAIL_HEIGHT_KEY @"pinfailheight"
+#define AUTH_PRIVKEY_KEY    @"authprivkey"
 #define SEED_KEY            @"seed" // depreceated
 
 static BOOL setKeychainData(NSData *data, NSString *key, BOOL authenticated)
@@ -358,6 +359,7 @@ static NSString *getKeychainString(NSString *key, NSError **error)
         setKeychainData(nil, PIN_KEY, NO);
         setKeychainData(nil, PIN_FAIL_COUNT_KEY, NO);
         setKeychainData(nil, PIN_FAIL_HEIGHT_KEY, NO);
+        setKeychainData(nil, AUTH_PRIVKEY_KEY, NO);
         
         if (! setKeychainString(seedPhrase, MNEMONIC_KEY, YES)) {
             NSLog(@"error setting wallet seed");
@@ -390,6 +392,21 @@ static NSString *getKeychainString(NSString *key, NSError **error)
     NSData *d = getKeychainData(CREATION_TIME_KEY, nil);
 
     return (d.length < sizeof(NSTimeInterval)) ? BIP39_CREATION_TIME : *(const NSTimeInterval *)d.bytes;
+}
+
+// private key for signing authenticated api calls
+- (NSString *)authPrivateKey
+{
+    NSString *privKey = getKeychainString(AUTH_PRIVKEY_KEY, nil);
+    
+    if (! privKey) {
+        NSData *seed = [self.mnemonic deriveKeyFromPhrase:getKeychainString(MNEMONIC_KEY, nil) withPassphrase:nil];
+
+        privKey = [[BRBIP32Sequence new] authPrivateKeyFromSeed:seed];
+        setKeychainString(privKey, AUTH_PRIVKEY_KEY, nil);
+    }
+    
+    return privKey;
 }
 
 // true if touch id is enabled
@@ -560,7 +577,9 @@ static NSString *getKeychainString(NSString *key, NSError **error)
     self.alertView = [[UIAlertView alloc]
                       initWithTitle:[NSString stringWithFormat:CIRCLE @"\t" CIRCLE @"\t" CIRCLE @"\t" CIRCLE @"\n%@",
                                      (title) ? title : @""] message:message delegate:self
-                      cancelButtonTitle:NSLocalizedString(@"cancel", nil) otherButtonTitles:nil];
+                      cancelButtonTitle:NSLocalizedString(@"cancel", nil)
+                      otherButtonTitles://NSLocalizedString(@"panic", nil),
+                      nil];
     self.pinField = nil; // reset pinField so a new one is created
     [self.alertView setValue:self.pinField forKey:@"accessoryView"];
     [self.alertView show];
@@ -938,12 +957,13 @@ completion:(void (^)(NSArray *utxos, NSArray *amounts, NSArray *scripts, NSError
                 ! [utxo[@"value"] isKindOfClass:[NSNumber class]]) {
                 completion(nil, nil, nil,
                            [NSError errorWithDomain:@"BreadWallet" code:417 userInfo:@{NSLocalizedDescriptionKey:
-                            [NSString stringWithFormat:NSLocalizedString(@"unexpected response from %@",nil),u.host]}]);
+                            [NSString stringWithFormat:NSLocalizedString(@"unexpected response from %@", nil),
+                             u.host]}]);
                 return;
             }
             
             if (! [utxo[@"script_type"] isEqual:@"pubkeyhash"] && ! [utxo[@"script_type"] isEqual:@"pubkey"]) continue;
-            o.hash = *(const UInt256 *)[[utxo[@"transaction_hash"] hexToData] reverse].bytes;
+            o.hash = *(const UInt256 *)[utxo[@"transaction_hash"] hexToData].reverse.bytes;
             o.n = [utxo[@"output_index"] unsignedIntValue];
             [utxos addObject:brutxo_obj(o)];
             [amounts addObject:utxo[@"value"]];
@@ -1018,7 +1038,7 @@ completion:(void (^)(BRTransaction *tx, uint64_t fee, NSError *error))completion
         // we will be adding a wallet output (34 bytes), also non-compact pubkey sigs are larger by 32bytes each
         if (fee) feeAmount = [self.wallet feeForTxSize:tx.size + 34 + (key.publicKey.length - 33)*tx.inputHashes.count];
      
-        if (feeAmount + TX_MIN_OUTPUT_AMOUNT > balance) {
+        if (feeAmount + self.wallet.minOutputAmount > balance) {
             completion(nil, 0, [NSError errorWithDomain:@"BreadWallet" code:417 userInfo:@{NSLocalizedDescriptionKey:
                                 NSLocalizedString(@"transaction fees would cost more than the funds available on this "
                                                   "private key (due to tiny \"dust\" deposits)",nil)}]);
@@ -1197,6 +1217,29 @@ replacementString:(NSString *)string
                 self.sweepCompletion = nil;
             }
         });
+    }
+    else if (buttonIndex >= 0 && [[alertView buttonTitleAtIndex:buttonIndex] isEqual:NSLocalizedString(@"panic",nil)]) {
+        UIAlertView *v = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"panic lock", nil)
+                          message:NSLocalizedString(@"Disable wallet for 48 hours? You can re-enable at any time using "
+                                                    "your recovery phrase.", nil) delegate:self
+                          cancelButtonTitle:NSLocalizedString(@"cancel", nil)
+                          otherButtonTitles:NSLocalizedString(@"lock", nil), nil];
+        [v show];
+    }
+    else if (buttonIndex >= 0 && [[alertView buttonTitleAtIndex:buttonIndex] isEqual:NSLocalizedString(@"lock",nil)]) {
+        if (self.secureTime + NSTimeIntervalSince1970 + 48*60*60 > getKeychainInt(PIN_FAIL_HEIGHT_KEY, nil)) {
+            setKeychainInt(self.secureTime + NSTimeIntervalSince1970 + 48*60*60, PIN_FAIL_HEIGHT_KEY, NO);
+        }
+        
+        if (3 > getKeychainInt(PIN_FAIL_COUNT_KEY, nil)) setKeychainInt(3, PIN_FAIL_COUNT_KEY, NO);
+
+        UIAlertView *v = [[UIAlertView alloc] initWithTitle:NSLocalizedString(@"wallet disabled", nil)
+                          message:[NSString stringWithFormat:NSLocalizedString(@"\ntry again in %d %@", nil), 48,
+                                   NSLocalizedString(@"hours", nil)] delegate:self
+                          cancelButtonTitle:NSLocalizedString(@"ok", nil) otherButtonTitles:nil];
+        [v show];
+    
+        [BREventManager saveEvent:@"wallet_manager:panic_lock"];
     }
     else if (buttonIndex >= 0 && [[alertView buttonTitleAtIndex:buttonIndex] isEqual:NSLocalizedString(@"reset",nil)]) {
         UITextView *t = [[UITextView alloc] initWithFrame:CGRectMake(0, 0, 260, 180)];

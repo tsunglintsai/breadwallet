@@ -756,28 +756,28 @@ memo:(NSString *)memo isSecure:(BOOL)isSecure
 
 - (void)updateClipboardText
 {
-    NSString *p = [[UIPasteboard generalPasteboard].string
+    NSString *str = [[UIPasteboard generalPasteboard].string
                    stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
     UIImage *img = [UIPasteboard generalPasteboard].image;
-    NSMutableArray *a = [NSMutableArray array];
-    NSCharacterSet *c = [NSCharacterSet alphanumericCharacterSet].invertedSet;
+    NSMutableOrderedSet *set = [NSMutableOrderedSet orderedSet];
+    NSCharacterSet *separators = [NSCharacterSet alphanumericCharacterSet].invertedSet;
     
-    if (p) {
-        [a addObject:p];
-        [a addObjectsFromArray:[p componentsSeparatedByCharactersInSet:c]];
+    if (str) {
+        [set addObject:str];
+        [set addObjectsFromArray:[str componentsSeparatedByCharactersInSet:separators]];
     }
     
     if (img && &CIDetectorTypeQRCode) {
         for (CIQRCodeFeature *qr in [[CIDetector detectorOfType:CIDetectorTypeQRCode context:nil options:nil]
                                      featuresInImage:[CIImage imageWithCGImage:img.CGImage]]) {
-            [a addObject:[qr.messageString
-                          stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]];
+            [set addObject:[qr.messageString
+                            stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]];
         }
     }
 
     self.clipboardText.text = @"";
     
-    for (NSString *s in a) {
+    for (NSString *s in set) {
         BRPaymentRequest *req = [BRPaymentRequest requestWithString:s];
         
         if ([req.paymentAddress isValidBitcoinAddress]) {
@@ -799,27 +799,22 @@ memo:(NSString *)memo isSecure:(BOOL)isSecure
     [self.clipboardText scrollRangeToVisible:NSMakeRange(0, 0)];
 }
 
-- (void)payFirstFromArray:(NSArray *)paymentRequestArray
+- (void)payFirstFromArray:(NSArray *)array
 {
     BRWalletManager *manager = [BRWalletManager sharedInstance];
     NSUInteger i = 0;
 
-    for (NSString *paymentRequestStr in paymentRequestArray) {
-        BRPaymentRequest *req = [BRPaymentRequest requestWithString:paymentRequestStr];
-        NSData *paymentRequestData = paymentRequestStr.hexToData.reverse;
+    for (NSString *str in array) {
+        BRPaymentRequest *req = [BRPaymentRequest requestWithString:str];
+        NSData *data = str.hexToData.reverse;
         
         i++;
         
         // if the clipboard contains a known txHash, we know it's not a hex encoded private key
-        if (paymentRequestData.length == sizeof(UInt256) &&
-            [[manager.wallet.recentTransactions valueForKey:@"txHash"]
-             containsObject:uint256_obj(*(UInt256 *)paymentRequestData.bytes)]) {
-            continue;
-        }
+        if (data.length == sizeof(UInt256) && [manager.wallet transactionForHash:*(UInt256 *)data.bytes]) continue;
         
-        if ([req.paymentAddress isValidBitcoinAddress] || [paymentRequestStr isValidBitcoinPrivateKey] ||
-            [paymentRequestStr isValidBitcoinBIP38Key] ||
-            (req.r.length > 0 && [req.scheme isEqual:@"bitcoin"])) {
+        if ([req.paymentAddress isValidBitcoinAddress] || [str isValidBitcoinPrivateKey] ||
+            [str isValidBitcoinBIP38Key] || (req.r.length > 0 && [req.scheme isEqual:@"bitcoin"])) {
             [self performSelector:@selector(confirmRequest:) withObject:req afterDelay:0.1];// delayed to show highlight
             return;
         }
@@ -827,7 +822,7 @@ memo:(NSString *)memo isSecure:(BOOL)isSecure
             [BRPaymentRequest fetch:req.r timeout:5.0 completion:^(BRPaymentProtocolRequest *req, NSError *error) {
                 dispatch_async(dispatch_get_main_queue(), ^{
                     if (error) { // don't try any more BIP73 urls
-                        [self payFirstFromArray:[paymentRequestArray objectsAtIndexes:[paymentRequestArray
+                        [self payFirstFromArray:[array objectsAtIndexes:[array
                         indexesOfObjectsPassingTest:^BOOL(id obj, NSUInteger idx, BOOL *stop) {
                             return (idx >= i && ([obj hasPrefix:@"bitcoin:"] || ! [NSURL URLWithString:obj]));
                         }]]];
@@ -881,28 +876,28 @@ memo:(NSString *)memo isSecure:(BOOL)isSecure
     if ([self nextTip]) return;
     [BREventManager saveEvent:@"send:pay_clipboard"];
 
-    NSString *p = [[UIPasteboard generalPasteboard].string
+    NSString *str = [[UIPasteboard generalPasteboard].string
                    stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
     UIImage *img = [UIPasteboard generalPasteboard].image;
-    NSMutableOrderedSet *s = [NSMutableOrderedSet orderedSet];
-    NSCharacterSet *c = [NSCharacterSet alphanumericCharacterSet].invertedSet;
+    NSMutableOrderedSet *set = [NSMutableOrderedSet orderedSet];
+    NSCharacterSet *separators = [NSCharacterSet alphanumericCharacterSet].invertedSet;
 
-    if (p) {
-        [s addObject:p];
-        [s addObjectsFromArray:[p componentsSeparatedByCharactersInSet:c]];
+    if (str) {
+        [set addObject:str];
+        [set addObjectsFromArray:[str componentsSeparatedByCharactersInSet:separators]];
     }
     
     if (img && &CIDetectorTypeQRCode) {
         for (CIQRCodeFeature *qr in [[CIDetector detectorOfType:CIDetectorTypeQRCode context:nil options:nil]
                                      featuresInImage:[CIImage imageWithCGImage:img.CGImage]]) {
-            [s addObject:[qr.messageString
+            [set addObject:[qr.messageString
              stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]]];
         }
     }
     
     [sender setEnabled:NO];
     self.clearClipboard = YES;
-    [self payFirstFromArray:s.array];
+    [self payFirstFromArray:set.array];
 }
 
 - (IBAction)reset:(id)sender

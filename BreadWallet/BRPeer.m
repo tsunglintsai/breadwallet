@@ -843,15 +843,29 @@ services:(uint64_t)services
 
 - (void)acceptNotfoundMessage:(NSData *)message
 {
+    NSMutableArray *txHashes = [NSMutableArray array], *blockHashes = [NSMutableArray array];
     NSUInteger l, count = (NSUInteger)[message varIntAtOffset:0 length:&l];
 
     if (l == 0 || message.length < l + count*36) {
-        [self error:@"malformed notfount message, length is %u, should be %u for %u items", (int)message.length,
+        [self error:@"malformed notfound message, length is %u, should be %u for %u items", (int)message.length,
          (int)(((l == 0) ? 1 : l) + count*36), (int)count];
         return;
     }
 
     NSLog(@"%@:%u got notfound with %u items", self.host, self.port, (int)count);
+
+    for (NSUInteger off = l; off < l + 36*count; off += 36) {
+        if ([message UInt32AtOffset:off] == tx) {
+            [txHashes addObject:uint256_obj([message hashAtOffset:off + sizeof(uint32_t)])];
+        }
+        else if ([message UInt32AtOffset:off] == merkleblock) {
+            [blockHashes addObject:uint256_obj([message hashAtOffset:off + sizeof(uint32_t)])];
+        }
+    }
+
+    dispatch_async(self.delegateQueue, ^{
+        [self.delegate peer:self notfoundTxHashes:txHashes andBlockHashes:blockHashes];
+    });
 }
 
 - (void)acceptPingMessage:(NSData *)message
@@ -944,7 +958,7 @@ services:(uint64_t)services
           (uint256_is_zero(txHash) ? @"" : @" txid: "), (uint256_is_zero(txHash) ? @"" : uint256_obj(txHash)));
     reason = nil; // fixes an unused variable warning for non-debug builds
 
-    if (! uint256_is_zero(txHash)) { // most likely a double spend due to tx missing from wallet
+    if (! uint256_is_zero(txHash)) {
         dispatch_async(self.delegateQueue, ^{
             [self.delegate peer:self rejectedTransaction:txHash withCode:code];
         });
