@@ -12,6 +12,7 @@ import Foundation
 
 class BRAWReceiveMoneyInterfaceController: WKInterfaceController {
 
+    @IBOutlet var qrCodeImage: WKInterfaceImage!
     override func awakeWithContext(context: AnyObject?) {
         super.awakeWithContext(context)
         

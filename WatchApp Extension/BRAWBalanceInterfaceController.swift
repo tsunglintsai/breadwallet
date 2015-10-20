@@ -11,6 +11,7 @@ import Foundation
 
 
 class BRAWBalanceInterfaceController: WKInterfaceController {
+    @IBOutlet var table: WKInterfaceTable!
 
     override func awakeWithContext(context: AnyObject?) {
         super.awakeWithContext(context)
@@ -21,6 +22,57 @@ class BRAWBalanceInterfaceController: WKInterfaceController {
     override func willActivate() {
         // This method is called when watch view controller is about to be visible to user
         super.willActivate()
+        self.mockData()
+    }
+    
+    
+    func mockData() {
+        table.setNumberOfRows(1, withRowType: "BRBalanceRowControl")
+        table.insertRowsAtIndexes(NSIndexSet(index: 1), withRowType: "BRTransactionHeaderRowControl")
+        table.insertRowsAtIndexes(NSIndexSet(index: 2), withRowType: "BRTransactionRowControl")
+        table.insertRowsAtIndexes(NSIndexSet(index: 3), withRowType: "BRTransactionRowControl")
+        table.insertRowsAtIndexes(NSIndexSet(index: 4), withRowType: "BRTransactionRowControl")
+        table.insertRowsAtIndexes(NSIndexSet(index: 5), withRowType: "BRTransactionRowControl")
+        
+        var rowControlEvent = table.rowControllerAtIndex(2) as! BRTransactionRowControl
+        rowControlEvent.amountLabel.setText("-ƀ10994")
+        rowControlEvent.localCurrencyAmount.setText("-$3.00")
+        rowControlEvent.seperatorGroup.setHeight(0.5)
+
+        rowControlEvent = table.rowControllerAtIndex(3) as! BRTransactionRowControl
+        rowControlEvent.sendOrReceiveLabel.setText("received")
+        rowControlEvent.sendOrReceiveLabel.setTextColor(UIColor(red: 0, green: 0.75, blue: 0, alpha: 1.0))
+        rowControlEvent.amountLabel.setText("ƀ7329")
+        rowControlEvent.localCurrencyAmount.setText("$2.00")
+        rowControlEvent.seperatorGroup.setHeight(0.5)
+        
+        rowControlEvent = table.rowControllerAtIndex(4) as! BRTransactionRowControl
+        rowControlEvent.sendOrReceiveLabel.setText("received")
+        rowControlEvent.sendOrReceiveLabel.setTextColor(UIColor(red: 0, green: 0.75, blue: 0, alpha: 1.0))
+        rowControlEvent.amountLabel.setText("ƀ36647")
+        rowControlEvent.localCurrencyAmount.setText("$10.00")
+        rowControlEvent.seperatorGroup.setHeight(0.5)
+        
+        rowControlEvent = table.rowControllerAtIndex(5) as! BRTransactionRowControl
+        rowControlEvent.amountLabel.setText("-ƀ21988")
+        rowControlEvent.localCurrencyAmount.setText("-$6.00")
+        rowControlEvent.seperatorGroup.setHeight(0.5)
+        
+        let rowControlBalance = table.rowControllerAtIndex(0) as! BRBalanceRowControl
+        rowControlBalance.bitBalance.setAttributedText(self.attributedString())
+
+    }
+    
+    func attributedString()-> NSAttributedString {
+        let attributedString = NSMutableAttributedString()
+        //        attributedString.appendAttributedString(NSAttributedString(string: "ƀ", attributes: [ NSFontAttributeName : UIFont.systemFontOfSize(30.0), NSForegroundColorAttributeName : UIColor.lightGrayColor()]))
+        //        attributedString.appendAttributedString(NSAttributedString(string: "96,000", attributes: [ NSFontAttributeName : UIFont.systemFontOfSize(60.0),
+        //            NSForegroundColorAttributeName : UIColor(red: 255.0/255.0, green: 150.0/255.0, blue: 48.0/255.0, alpha: 1.0)]))
+        
+        attributedString.appendAttributedString(NSAttributedString(string: "ƀ", attributes: [NSForegroundColorAttributeName : UIColor.grayColor()]))
+        attributedString.appendAttributedString(NSAttributedString(string: "1,000,000", attributes: [NSForegroundColorAttributeName : UIColor.whiteColor()]))
+        
+        return attributedString
     }
 
     override func didDeactivate() {

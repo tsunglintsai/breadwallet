@@ -39,20 +39,141 @@
         <!--Balance-->
         <scene sceneID="1F7-ti-8Wn">
             <objects>
-                <controller identifier="BRAWBalanceInterfaceController" title="Balance" hidesWhenLoading="NO" id="ZKF-gb-hhm">
+                <controller identifier="BRAWBalanceInterfaceController" title="Balance" hidesWhenLoading="NO" id="ZKF-gb-hhm" customClass="BRAWBalanceInterfaceController" customModule="WatchApp_Extension">
+                    <items>
+                        <table alignment="left" id="PZF-P6-QtU">
+                            <items>
+                                <tableRow identifier="BRBalanceRowControl" selectable="NO" id="lmR-Nf-Ujh" customClass="BRBalanceRowControl" customModule="WatchApp_Extension">
+                                    <group key="rootItem" width="1" height="174" alignment="left" layout="vertical" spacing="0.0" id="7iU-3a-55V">
+                                        <items>
+                                            <group width="1" height="140" alignment="left" id="K5k-gF-zP8">
+                                                <items>
+                                                    <group width="1" alignment="left" verticalAlignment="center" layout="vertical" spacing="0.0" id="jKA-oS-2q3">
+                                                        <items>
+                                                            <group width="1" height="48" alignment="left" id="tDy-Pe-Me1">
+                                                                <items>
+                                                                    <label alignment="left" verticalAlignment="bottom" text="ƀ1,000,000" minimumScaleFactor="0.5" id="kmM-c3-2G4">
+                                                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                                        <fontDescription key="font" type="system" pointSize="40"/>
+                                                                        <variation key="device=watch42mm" text="ƀ1,000,000"/>
+                                                                    </label>
+                                                                </items>
+                                                            </group>
+                                                            <label alignment="left" text="$272.87" id="xbl-pX-Pdl">
+                                                                <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                                                <fontDescription key="font" type="system" pointSize="14"/>
+                                                            </label>
+                                                        </items>
+                                                        <edgeInsets key="margins" left="0.0" right="0.0" top="0.0" bottom="0.0"/>
+                                                    </group>
+                                                </items>
+                                                <variation key="device=watch38mm" height="100"/>
+                                            </group>
+                                            <group width="20" height="4" alignment="center" verticalAlignment="bottom" radius="2" id="Cul-Jj-mj9">
+                                                <color key="backgroundColor" white="0.66666666669999997" alpha="0.5" colorSpace="calibratedWhite"/>
+                                                <edgeInsets key="margins" left="0.0" right="0.0" top="0.0" bottom="0.0"/>
+                                            </group>
+                                            <group width="1" height="12" alignment="left" verticalAlignment="bottom" id="ji2-0e-p5R" userLabel="Padding to hide page indicator"/>
+                                        </items>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        <variation key="device=watch38mm" height="150"/>
+                                        <variation key="device=watch42mm">
+                                            <mask key="items">
+                                                <include reference="Cul-Jj-mj9"/>
+                                            </mask>
+                                        </variation>
+                                    </group>
+                                    <connections>
+                                        <outlet property="bitBalance" destination="kmM-c3-2G4" id="GEY-xE-98i"/>
+                                        <outlet property="dollorBalance" destination="xbl-pX-Pdl" id="GCR-XI-bMv"/>
+                                    </connections>
+                                </tableRow>
+                                <tableRow identifier="BRTransactionHeaderRowControl" selectable="NO" id="My9-d2-IuK" customClass="BRTransactionHeaderRowControl" customModule="WatchApp_Extension">
+                                    <group key="rootItem" width="1" height="20" alignment="left" layout="vertical" spacing="0.0" id="Pfb-IG-Ydf">
+                                        <items>
+                                            <group width="1" alignment="left" radius="2" id="RPA-uN-IAO">
+                                                <items>
+                                                    <label alignment="center" text="Transactions" id="r80-H8-ngA">
+                                                        <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                        <fontDescription key="font" type="system" pointSize="14"/>
+                                                    </label>
+                                                </items>
+                                                <color key="backgroundColor" red="1" green="0.44765445659999997" blue="0.066495729439999998" alpha="0.30078125" colorSpace="calibratedRGB"/>
+                                            </group>
+                                        </items>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                        <edgeInsets key="margins" left="0.0" right="0.0" top="0.0" bottom="0.0"/>
+                                    </group>
+                                </tableRow>
+                                <tableRow identifier="BRTransactionRowControl" selectable="NO" id="a9L-2g-j9D" customClass="BRTransactionRowControl" customModule="WatchApp_Extension">
+                                    <group key="rootItem" width="1" height="0.0" alignment="left" layout="vertical" id="rmP-At-sC2">
+                                        <items>
+                                            <group width="1" height="40" alignment="left" id="BIJ-SP-VFd">
+                                                <items>
+                                                    <group width="0.45000000000000001" height="1" alignment="left" verticalAlignment="center" layout="vertical" id="vGv-qG-pgn">
+                                                        <items>
+                                                            <label alignment="left" text="sent" id="CKk-B9-UdD">
+                                                                <color key="textColor" red="1" green="0.3294117647" blue="0.3294117647" alpha="1" colorSpace="calibratedRGB"/>
+                                                                <fontDescription key="font" type="system" pointSize="14"/>
+                                                            </label>
+                                                            <label alignment="left" text="10/12/05" id="ldT-a1-2YZ">
+                                                                <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                                                <fontDescription key="font" type="system" pointSize="12"/>
+                                                            </label>
+                                                        </items>
+                                                    </group>
+                                                    <group width="0.55000000000000004" height="1" alignment="right" verticalAlignment="center" layout="vertical" id="Kwi-43-bNF">
+                                                        <items>
+                                                            <label alignment="right" text="ƀ14,659" minimumScaleFactor="0.5" id="gCK-ru-Um6">
+                                                                <fontDescription key="font" type="system" pointSize="14"/>
+                                                            </label>
+                                                            <label alignment="right" text="$4.00" id="WXm-0a-dhD">
+                                                                <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                                                <fontDescription key="font" type="system" pointSize="12"/>
+                                                            </label>
+                                                        </items>
+                                                    </group>
+                                                </items>
+                                            </group>
+                                            <group width="1" height="2" alignment="left" id="Njc-ne-SVi" userLabel="Seperator Group">
+                                                <color key="backgroundColor" red="0.27235931679999997" green="0.26326022780000002" blue="0.2921166013" alpha="1" colorSpace="calibratedRGB"/>
+                                                <edgeInsets key="margins" left="10" right="0.0" top="0.0" bottom="0.0"/>
+                                            </group>
+                                        </items>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                    </group>
+                                    <connections>
+                                        <outlet property="amountLabel" destination="gCK-ru-Um6" id="0iN-PR-Sh7"/>
+                                        <outlet property="dateLabel" destination="ldT-a1-2YZ" id="GgZ-yX-TZT"/>
+                                        <outlet property="localCurrencyAmount" destination="WXm-0a-dhD" id="teh-gU-CiS"/>
+                                        <outlet property="sendOrReceiveLabel" destination="CKk-B9-UdD" id="1yk-5j-fZy"/>
+                                        <outlet property="seperatorGroup" destination="Njc-ne-SVi" id="ffU-6b-AHO"/>
+                                    </connections>
+                                </tableRow>
+                            </items>
+                        </table>
+                    </items>
                     <connections>
+                        <outlet property="table" destination="PZF-P6-QtU" id="Yb7-B2-7gu"/>
                         <segue destination="3Fr-v5-6pR" kind="relationship" relationship="nextPage" id="dG7-vS-GX4"/>
                     </connections>
                 </controller>
             </objects>
-            <point key="canvasLocation" x="369" y="444"/>
+            <point key="canvasLocation" x="376" y="562.5"/>
         </scene>
         <!--Receive Money-->
         <scene sceneID="wCU-y0-cjL">
             <objects>
-                <controller identifier="BRAWReceiveMoneyInterfaceController" title="Receive Money" hidesWhenLoading="NO" id="3Fr-v5-6pR"/>
+                <controller identifier="BRAWReceiveMoneyInterfaceController" title="Receive Money" hidesWhenLoading="NO" id="3Fr-v5-6pR" customClass="BRAWReceiveMoneyInterfaceController" customModule="WatchApp_Extension">
+                    <items>
+                        <imageView width="130" height="130" alignment="center" verticalAlignment="center" image="QRCodeMock" id="zcl-13-Lom"/>
+                    </items>
+                    <connections>
+                        <outlet property="qrCodeImage" destination="zcl-13-Lom" id="ZBn-z4-mZ8"/>
+                    </connections>
+                </controller>
             </objects>
-            <point key="canvasLocation" x="594" y="444"/>
+            <point key="canvasLocation" x="641" y="563"/>
         </scene>
     </scenes>
 </document>
