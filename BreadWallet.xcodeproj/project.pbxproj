@@ -68,13 +68,16 @@
 		BA913BE21BD57E4D005A7C0E /* Interface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BA913BE01BD57E4D005A7C0E /* Interface.storyboard */; };
 		BA913BE41BD57E4D005A7C0E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BA913BE31BD57E4D005A7C0E /* Assets.xcassets */; };
 		BA913BEB1BD57E4D005A7C0E /* WatchApp Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = BA913BEA1BD57E4D005A7C0E /* WatchApp Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		BA913BF01BD57E4D005A7C0E /* InterfaceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA913BEF1BD57E4D005A7C0E /* InterfaceController.swift */; };
 		BA913BF21BD57E4D005A7C0E /* ExtensionDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA913BF11BD57E4D005A7C0E /* ExtensionDelegate.swift */; };
 		BA913BF41BD57E4D005A7C0E /* GlanceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA913BF31BD57E4D005A7C0E /* GlanceController.swift */; };
 		BA913BF61BD57E4D005A7C0E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BA913BF51BD57E4D005A7C0E /* Assets.xcassets */; };
 		BA913BFA1BD57E4D005A7C0E /* WatchApp.app in Embed Watch Content */ = {isa = PBXBuildFile; fileRef = BA913BDE1BD57E4D005A7C0E /* WatchApp.app */; };
 		BAA4843C1B3EFFAF0075C749 /* UIImage+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = BAA4843B1B3EFFAF0075C749 /* UIImage+Utils.m */; };
 		BAA4843D1B3EFFAF0075C749 /* UIImage+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = BAA4843B1B3EFFAF0075C749 /* UIImage+Utils.m */; };
+		BAA6E3EB1BD5C78500773205 /* BRAWRootInterfaceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAA6E3EA1BD5C78500773205 /* BRAWRootInterfaceController.swift */; settings = {ASSET_TAGS = (); }; };
+		BAA6E3ED1BD5C82400773205 /* BRAWSetupWalletInterfaceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAA6E3EC1BD5C82400773205 /* BRAWSetupWalletInterfaceController.swift */; settings = {ASSET_TAGS = (); }; };
+		BAA6E3EF1BD5CA0E00773205 /* BRAWBalanceInterfaceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAA6E3EE1BD5CA0E00773205 /* BRAWBalanceInterfaceController.swift */; settings = {ASSET_TAGS = (); }; };
+		BAA6E3F11BD5CA5900773205 /* BRAWReceiveMoneyInterfaceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAA6E3F01BD5CA5900773205 /* BRAWReceiveMoneyInterfaceController.swift */; settings = {ASSET_TAGS = (); }; };
 		BAE12BF21B2DEE7F00895CC5 /* TodayExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = BAE12BE51B2DEE7F00895CC5 /* TodayExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		BAE12C061B2DEEF700895CC5 /* BRTodayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BAE12C051B2DEEF700895CC5 /* BRTodayViewController.m */; };
 /* End PBXBuildFile section */
@@ -352,13 +355,16 @@
 		BA913BE31BD57E4D005A7C0E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		BA913BE51BD57E4D005A7C0E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BA913BEA1BD57E4D005A7C0E /* WatchApp Extension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = "WatchApp Extension.appex"; sourceTree = BUILT_PRODUCTS_DIR; };
-		BA913BEF1BD57E4D005A7C0E /* InterfaceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InterfaceController.swift; sourceTree = "<group>"; };
 		BA913BF11BD57E4D005A7C0E /* ExtensionDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExtensionDelegate.swift; sourceTree = "<group>"; };
 		BA913BF31BD57E4D005A7C0E /* GlanceController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlanceController.swift; sourceTree = "<group>"; };
 		BA913BF51BD57E4D005A7C0E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		BA913BF71BD57E4D005A7C0E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		BAA4843A1B3EFFAF0075C749 /* UIImage+Utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Utils.h"; sourceTree = "<group>"; };
 		BAA4843B1B3EFFAF0075C749 /* UIImage+Utils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Utils.m"; sourceTree = "<group>"; };
+		BAA6E3EA1BD5C78500773205 /* BRAWRootInterfaceController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BRAWRootInterfaceController.swift; sourceTree = "<group>"; };
+		BAA6E3EC1BD5C82400773205 /* BRAWSetupWalletInterfaceController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BRAWSetupWalletInterfaceController.swift; sourceTree = "<group>"; };
+		BAA6E3EE1BD5CA0E00773205 /* BRAWBalanceInterfaceController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BRAWBalanceInterfaceController.swift; sourceTree = "<group>"; };
+		BAA6E3F01BD5CA5900773205 /* BRAWReceiveMoneyInterfaceController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BRAWReceiveMoneyInterfaceController.swift; sourceTree = "<group>"; };
 		BAE12BE51B2DEE7F00895CC5 /* TodayExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = TodayExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		BAE12BE61B2DEE7F00895CC5 /* NotificationCenter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NotificationCenter.framework; path = System/Library/Frameworks/NotificationCenter.framework; sourceTree = SDKROOT; };
 		BAE12BEA1B2DEE7F00895CC5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -676,7 +682,10 @@
 		BA913BEE1BD57E4D005A7C0E /* WatchApp Extension */ = {
 			isa = PBXGroup;
 			children = (
-				BA913BEF1BD57E4D005A7C0E /* InterfaceController.swift */,
+				BAA6E3EA1BD5C78500773205 /* BRAWRootInterfaceController.swift */,
+				BAA6E3EC1BD5C82400773205 /* BRAWSetupWalletInterfaceController.swift */,
+				BAA6E3EE1BD5CA0E00773205 /* BRAWBalanceInterfaceController.swift */,
+				BAA6E3F01BD5CA5900773205 /* BRAWReceiveMoneyInterfaceController.swift */,
 				BA913BF11BD57E4D005A7C0E /* ExtensionDelegate.swift */,
 				BA913BF31BD57E4D005A7C0E /* GlanceController.swift */,
 				BA913BF51BD57E4D005A7C0E /* Assets.xcassets */,
@@ -1022,9 +1031,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BAA6E3F11BD5CA5900773205 /* BRAWReceiveMoneyInterfaceController.swift in Sources */,
+				BAA6E3EF1BD5CA0E00773205 /* BRAWBalanceInterfaceController.swift in Sources */,
 				BA913BF21BD57E4D005A7C0E /* ExtensionDelegate.swift in Sources */,
-				BA913BF01BD57E4D005A7C0E /* InterfaceController.swift in Sources */,
 				BA913BF41BD57E4D005A7C0E /* GlanceController.swift in Sources */,
+				BAA6E3ED1BD5C82400773205 /* BRAWSetupWalletInterfaceController.swift in Sources */,
+				BAA6E3EB1BD5C78500773205 /* BRAWRootInterfaceController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1516,6 +1528,7 @@
 				BA913BFE1BD57E4E005A7C0E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		BA913C011BD57E4E005A7C0E /* Build configuration list for PBXNativeTarget "WatchApp" */ = {
 			isa = XCConfigurationList;
@@ -1524,6 +1537,7 @@
 				BA913BFC1BD57E4E005A7C0E /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		BAE12BF61B2DEE7F00895CC5 /* Build configuration list for PBXNativeTarget "TodayExtension" */ = {
 			isa = XCConfigurationList;
