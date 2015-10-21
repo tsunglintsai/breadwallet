@@ -65,13 +65,8 @@ class BRAWBalanceInterfaceController: WKInterfaceController {
     
     func attributedString()-> NSAttributedString {
         let attributedString = NSMutableAttributedString()
-        //        attributedString.appendAttributedString(NSAttributedString(string: "ƀ", attributes: [ NSFontAttributeName : UIFont.systemFontOfSize(30.0), NSForegroundColorAttributeName : UIColor.lightGrayColor()]))
-        //        attributedString.appendAttributedString(NSAttributedString(string: "96,000", attributes: [ NSFontAttributeName : UIFont.systemFontOfSize(60.0),
-        //            NSForegroundColorAttributeName : UIColor(red: 255.0/255.0, green: 150.0/255.0, blue: 48.0/255.0, alpha: 1.0)]))
-        
         attributedString.appendAttributedString(NSAttributedString(string: "ƀ", attributes: [NSForegroundColorAttributeName : UIColor.grayColor()]))
         attributedString.appendAttributedString(NSAttributedString(string: "1,000,000", attributes: [NSForegroundColorAttributeName : UIColor.whiteColor()]))
-        
         return attributedString
     }
 
