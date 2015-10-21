@@ -12,9 +12,18 @@ import Foundation
 
 class BRTransactionRowControl: NSObject {
 
-    @IBOutlet var sendOrReceiveLabel: WKInterfaceLabel!
+    @IBOutlet var sendIcon: WKInterfaceImage!
+    @IBOutlet var receiveIcon: WKInterfaceImage!
     @IBOutlet var amountLabel: WKInterfaceLabel!
     @IBOutlet var dateLabel: WKInterfaceLabel!
     @IBOutlet var seperatorGroup: WKInterfaceGroup!
     @IBOutlet var localCurrencyAmount: WKInterfaceLabel!
+    
+    var isSendMoney = false {
+        didSet {
+            self.sendIcon.setHidden(!isSendMoney)
+            self.receiveIcon.setHidden(isSendMoney)
+        }
+    }
+    
 }

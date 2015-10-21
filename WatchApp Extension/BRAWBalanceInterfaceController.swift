@@ -38,25 +38,25 @@ class BRAWBalanceInterfaceController: WKInterfaceController {
         rowControlEvent.amountLabel.setText("-ƀ10994")
         rowControlEvent.localCurrencyAmount.setText("-$3.00")
         rowControlEvent.seperatorGroup.setHeight(0.5)
+        rowControlEvent.isSendMoney = true
 
         rowControlEvent = table.rowControllerAtIndex(3) as! BRTransactionRowControl
-        rowControlEvent.sendOrReceiveLabel.setText("received")
-        rowControlEvent.sendOrReceiveLabel.setTextColor(UIColor(red: 0, green: 0.75, blue: 0, alpha: 1.0))
         rowControlEvent.amountLabel.setText("ƀ7329")
         rowControlEvent.localCurrencyAmount.setText("$2.00")
         rowControlEvent.seperatorGroup.setHeight(0.5)
+        rowControlEvent.isSendMoney = false
         
         rowControlEvent = table.rowControllerAtIndex(4) as! BRTransactionRowControl
-        rowControlEvent.sendOrReceiveLabel.setText("received")
-        rowControlEvent.sendOrReceiveLabel.setTextColor(UIColor(red: 0, green: 0.75, blue: 0, alpha: 1.0))
         rowControlEvent.amountLabel.setText("ƀ36647")
         rowControlEvent.localCurrencyAmount.setText("$10.00")
         rowControlEvent.seperatorGroup.setHeight(0.5)
+        rowControlEvent.isSendMoney = false
         
         rowControlEvent = table.rowControllerAtIndex(5) as! BRTransactionRowControl
         rowControlEvent.amountLabel.setText("-ƀ21988")
         rowControlEvent.localCurrencyAmount.setText("-$6.00")
         rowControlEvent.seperatorGroup.setHeight(0.5)
+        rowControlEvent.isSendMoney = true
         
         let rowControlBalance = table.rowControllerAtIndex(0) as! BRBalanceRowControl
         rowControlBalance.bitBalance.setAttributedText(self.attributedString())

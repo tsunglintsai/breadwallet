@@ -112,11 +112,9 @@
                                                 <items>
                                                     <group width="0.45000000000000001" height="1" alignment="left" verticalAlignment="center" layout="vertical" id="vGv-qG-pgn">
                                                         <items>
-                                                            <label alignment="left" text="sent" id="CKk-B9-UdD">
-                                                                <color key="textColor" red="1" green="0.3294117647" blue="0.3294117647" alpha="1" colorSpace="calibratedRGB"/>
-                                                                <fontDescription key="font" type="system" pointSize="14"/>
-                                                            </label>
-                                                            <label alignment="left" text="10/12/05" id="ldT-a1-2YZ">
+                                                            <imageView width="30" height="20" alignment="left" image="SentMoneyIcon" contentMode="scaleAspectFill" id="ITw-RF-K7K"/>
+                                                            <imageView width="30" height="20" alignment="left" hidden="YES" image="ReceiveMoneyIcon" contentMode="scaleAspectFill" id="qRI-Ft-1cs" userLabel="Receive Icon"/>
+                                                            <label alignment="left" verticalAlignment="bottom" text="10/12/05" id="ldT-a1-2YZ">
                                                                 <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                                                 <fontDescription key="font" type="system" pointSize="12"/>
                                                             </label>
@@ -127,7 +125,7 @@
                                                             <label alignment="right" text="ƀ14,659" minimumScaleFactor="0.5" id="gCK-ru-Um6">
                                                                 <fontDescription key="font" type="system" pointSize="14"/>
                                                             </label>
-                                                            <label alignment="right" text="$4.00" id="WXm-0a-dhD">
+                                                            <label alignment="right" verticalAlignment="bottom" text="$4.00" id="WXm-0a-dhD">
                                                                 <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                                                 <fontDescription key="font" type="system" pointSize="12"/>
                                                             </label>
@@ -146,7 +144,8 @@
                                         <outlet property="amountLabel" destination="gCK-ru-Um6" id="0iN-PR-Sh7"/>
                                         <outlet property="dateLabel" destination="ldT-a1-2YZ" id="GgZ-yX-TZT"/>
                                         <outlet property="localCurrencyAmount" destination="WXm-0a-dhD" id="teh-gU-CiS"/>
-                                        <outlet property="sendOrReceiveLabel" destination="CKk-B9-UdD" id="1yk-5j-fZy"/>
+                                        <outlet property="receiveIcon" destination="qRI-Ft-1cs" id="hL1-qP-nJs"/>
+                                        <outlet property="sendIcon" destination="ITw-RF-K7K" id="UvG-2C-kMI"/>
                                         <outlet property="seperatorGroup" destination="Njc-ne-SVi" id="ffU-6b-AHO"/>
                                     </connections>
                                 </tableRow>
