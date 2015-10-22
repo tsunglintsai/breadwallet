@@ -23,10 +23,10 @@
             </objects>
             <point key="canvasLocation" x="369" y="217"/>
         </scene>
-        <!--Glance Interface Controller-->
+        <!--BRAWGlanceInterfaceController-->
         <scene sceneID="rjY-Ar-IMT">
             <objects>
-                <glanceController spacing="0.0" id="Sv0-Ai-Zie" customClass="BRAWInterfaceController" customModule="WatchApp_Extension">
+                <glanceController identifier="BRAWGlanceInterfaceController" spacing="0.0" id="Sv0-Ai-Zie" customClass="BRAWGlanceInterfaceController" customModule="WatchApp_Extension">
                     <items>
                         <group alignment="left" id="gv7-I2-MZq">
                             <items>
@@ -60,6 +60,9 @@
                         </group>
                     </items>
                     <edgeInsets key="margins" left="0.0" right="0.0" top="0.0" bottom="14"/>
+                    <connections>
+                        <outlet property="balanceAmountLabel" destination="oAt-M3-LfO" id="KJX-NY-fKT"/>
+                    </connections>
                 </glanceController>
             </objects>
             <point key="canvasLocation" x="164" y="514"/>
