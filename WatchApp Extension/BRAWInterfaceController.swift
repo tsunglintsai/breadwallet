@@ -1,8 +1,8 @@
 //
-//  GlanceController.swift
-//  WatchApp Extension
+//  BRAWInterfaceController.swift
+//  BreadWallet
 //
-//  Created by Henry on 10/19/15.
+//  Created by Henry on 10/22/15.
 //  Copyright © 2015 Aaron Voisine. All rights reserved.
 //
 
@@ -10,7 +10,7 @@ import WatchKit
 import Foundation
 
 
-class GlanceController: WKInterfaceController {
+class BRAWInterfaceController: WKInterfaceController {
 
     override func awakeWithContext(context: AnyObject?) {
         super.awakeWithContext(context)
