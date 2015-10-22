@@ -17,7 +17,7 @@
             <objects>
                 <controller identifier="BRAWSetupWalletInterfaceController" title="BreadWallet" hidesWhenLoading="NO" id="Qm0-UG-3gN" customClass="BRAWSetupWalletInterfaceController" customModule="WatchApp_Extension">
                     <items>
-                        <label alignment="center" verticalAlignment="center" text="Open Breadwallet iPhone app to setup your wallet" textAlignment="center" numberOfLines="0" id="L9O-8D-a8K"/>
+                        <label alignment="center" verticalAlignment="center" text="Open Breadwallet iPhone app to setup your wallet" textAlignment="left" numberOfLines="0" id="L9O-8D-a8K"/>
                     </items>
                 </controller>
             </objects>
@@ -28,40 +28,46 @@
             <objects>
                 <glanceController identifier="BRAWGlanceInterfaceController" spacing="0.0" id="Sv0-Ai-Zie" customClass="BRAWGlanceInterfaceController" customModule="WatchApp_Extension">
                     <items>
-                        <group alignment="left" id="gv7-I2-MZq">
+                        <group alignment="left" id="gv7-I2-MZq" userLabel="Top group">
                             <items>
-                                <group width="1" height="1" alignment="left" id="Hps-p7-hgA">
-                                    <items>
-                                        <group width="40" height="40" alignment="left" verticalAlignment="center" backgroundImage="GalanceIcon" radius="20" id="b9B-iF-yR2"/>
-                                    </items>
-                                    <edgeInsets key="margins" left="0.0" right="0.0" top="0.0" bottom="0.0"/>
-                                </group>
+                                <group width="40" height="40" alignment="left" verticalAlignment="center" backgroundImage="GalanceIcon" radius="20" id="b9B-iF-yR2" userLabel="Icon group"/>
                             </items>
                         </group>
-                        <group alignment="left" layout="vertical" id="eew-Gs-W6Y">
+                        <group alignment="left" layout="vertical" id="eew-Gs-W6Y" userLabel="Bottom group">
                             <items>
-                                <group width="1" alignment="left" layout="vertical" spacing="0.0" id="DFe-EB-Agp">
+                                <group width="1" alignment="left" id="7AP-2v-fcP" userLabel="Setup wallet message container">
                                     <items>
-                                        <label alignment="left" text="ƀ802,130" minimumScaleFactor="0.10000000000000001" id="oAt-M3-LfO">
-                                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                            <fontDescription key="font" type="system" weight="light" pointSize="34"/>
-                                        </label>
-                                        <label alignment="left" text="$211.86" numberOfLines="0" id="6Qe-WS-tck">
-                                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                        <label alignment="center" verticalAlignment="center" text="Open Breadwallet iPhone app to setup your wallet" textAlignment="left" numberOfLines="0" id="Gat-bm-t3w"/>
+                                    </items>
+                                </group>
+                                <group width="1" alignment="left" layout="vertical" id="z73-6R-jav" userLabel="Balance info container">
+                                    <items>
+                                        <group width="1" alignment="left" layout="vertical" spacing="0.0" id="DFe-EB-Agp" userLabel="Balance container">
+                                            <items>
+                                                <label alignment="left" text="ƀ802,130" minimumScaleFactor="0.10000000000000001" id="oAt-M3-LfO">
+                                                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <fontDescription key="font" type="system" weight="light" pointSize="34"/>
+                                                </label>
+                                                <label alignment="left" text="$211.86" numberOfLines="0" id="6Qe-WS-tck" userLabel="Local currency amount label">
+                                                    <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                                    <fontDescription key="font" type="system" pointSize="14"/>
+                                                </label>
+                                            </items>
+                                        </group>
+                                        <label alignment="left" text="receive ƀ100, 5 days ago" numberOfLines="0" id="jqM-V4-RYz" userLabel="Last transaction label">
+                                            <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                             <fontDescription key="font" type="system" pointSize="14"/>
                                         </label>
                                     </items>
                                 </group>
-                                <label alignment="left" text="receive ƀ100, 5 days ago" numberOfLines="0" id="jqM-V4-RYz">
-                                    <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                                    <fontDescription key="font" type="system" pointSize="14"/>
-                                </label>
                             </items>
                         </group>
                     </items>
                     <edgeInsets key="margins" left="0.0" right="0.0" top="0.0" bottom="14"/>
                     <connections>
                         <outlet property="balanceAmountLabel" destination="oAt-M3-LfO" id="KJX-NY-fKT"/>
+                        <outlet property="balanceInfoContainer" destination="z73-6R-jav" id="VHP-7n-ewE"/>
+                        <outlet property="setupWalletContainer" destination="7AP-2v-fcP" id="sk5-hX-hUI"/>
                     </connections>
                 </glanceController>
             </objects>

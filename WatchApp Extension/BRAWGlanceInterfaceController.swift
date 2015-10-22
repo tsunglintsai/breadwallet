@@ -27,11 +27,15 @@ import WatchKit
 
 class BRAWGlanceInterfaceController: WKInterfaceController {
     
+    @IBOutlet var setupWalletContainer: WKInterfaceGroup!
     @IBOutlet var balanceAmountLabel: WKInterfaceLabel!
+    @IBOutlet var balanceInfoContainer: WKInterfaceGroup!
     override func awakeWithContext(context: AnyObject?) {
         super.awakeWithContext(context)
         self.balanceAmountLabel.setAttributedText(attributedString())
         // Configure interface objects here.
+        balanceInfoContainer.setHidden(shouldShowSetupWalletInterface())
+        setupWalletContainer.setHidden(!shouldShowSetupWalletInterface())
     }
     
     override func willActivate() {
@@ -49,6 +53,10 @@ class BRAWGlanceInterfaceController: WKInterfaceController {
         attributedString.appendAttributedString(NSAttributedString(string: "ƀ", attributes: [NSForegroundColorAttributeName : UIColor.grayColor()]))
         attributedString.appendAttributedString(NSAttributedString(string: "1,000,000", attributes: [NSForegroundColorAttributeName : UIColor.whiteColor()]))
         return attributedString
+    }
+    
+    func shouldShowSetupWalletInterface()->Bool {
+        return false;
     }
     
 }

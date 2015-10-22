@@ -36,7 +36,7 @@ class BRAWRootInterfaceController: WKInterfaceController {
     override func willActivate() {
         // This method is called when watch view controller is about to be visible to user
         super.willActivate()
-        if self.shouldShowSetupWalletInterface() {
+        if shouldShowSetupWalletInterface() {
             WKInterfaceController.reloadRootControllersWithNames(["BRAWSetupWalletInterfaceController"], contexts: [])
         } else {
             WKInterfaceController.reloadRootControllersWithNames(["BRAWBalanceInterfaceController","BRAWReceiveMoneyInterfaceController"], contexts: [])
