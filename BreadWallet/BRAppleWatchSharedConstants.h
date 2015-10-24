@@ -1,9 +1,9 @@
 //
-//  TodayViewController.m
-//  TodayWidget
+//  BRAppGroupConstants.h
+//  BreadWallet
 //
-//  Created by Henry on 6/14/15.
-//  Copyright (c) 2015 Aaron Voisine <voisine@gmail.com>
+//  Created by Henry Tsai on 10/22/15.
+//  Copyright (c) 2013 Aaron Voisine <voisine@gmail.com>
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -23,22 +23,17 @@
 //  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 //  THE SOFTWARE.
 
-import WatchKit
+#import "BRAppleWatchData.h"
 
-class ExtensionDelegate: NSObject, WKExtensionDelegate {
+#define AW_SESSION_RESPONSE_KEY    @"AW_SESSION_RESPONSE_KEY"
+#define AW_SESSION_REQUEST_KEY     @"AW_SESSION_REQUEST_KEY"
 
-    func applicationDidFinishLaunching() {
-        // Perform any final initialization of your application.
-    }
+#define AW_SESSION_REQUEST_DATA_TYPE_KEY        @"AW_SESSION_REQUEST_DATA_TYPE_KEY"
 
-    func applicationDidBecomeActive() {
-        // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
-        BRAWWatchDataManager.sharedInstance
-    }
+typedef enum {
+    AWSessionRquestDataTypeBalance,
+    AWSessionRquestDataTypeTransactions,
+    AWSessionRquestDataTypeReceiveMoneyQR,
+} AWSessionRquestDataType;
 
-    func applicationWillResignActive() {
-        // Sent when the application is about to move from active to inactive state. This can occur for certain types of temporary interruptions (such as an incoming phone call or SMS message) or when the user quits the application and it begins the transition to the background state.
-        // Use this method to pause ongoing tasks, disable timers, etc.
-    }
 
-}

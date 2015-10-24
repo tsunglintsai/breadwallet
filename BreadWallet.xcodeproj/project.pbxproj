@@ -68,6 +68,12 @@
 		BA6645921BD92330007A6BB1 /* BRAWBalanceRowControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA6645911BD92330007A6BB1 /* BRAWBalanceRowControl.swift */; };
 		BA6645941BD9249B007A6BB1 /* BRAWTransactionHeaderRowControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA6645931BD9249B007A6BB1 /* BRAWTransactionHeaderRowControl.swift */; };
 		BA6645961BD924EB007A6BB1 /* BRAWTransactionRowControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA6645951BD924EB007A6BB1 /* BRAWTransactionRowControl.swift */; };
+		BA7B53501BDA9A2800355E8D /* BRAppleWatchData.m in Sources */ = {isa = PBXBuildFile; fileRef = BA7B534F1BDA9A2800355E8D /* BRAppleWatchData.m */; };
+		BA7B53511BDA9A2800355E8D /* BRAppleWatchData.m in Sources */ = {isa = PBXBuildFile; fileRef = BA7B534F1BDA9A2800355E8D /* BRAppleWatchData.m */; };
+		BA7B53541BDAA0A800355E8D /* BRAppleWatchTransactionData.m in Sources */ = {isa = PBXBuildFile; fileRef = BA7B53531BDAA0A800355E8D /* BRAppleWatchTransactionData.m */; };
+		BA7B53551BDAA0A800355E8D /* BRAppleWatchTransactionData.m in Sources */ = {isa = PBXBuildFile; fileRef = BA7B53531BDAA0A800355E8D /* BRAppleWatchTransactionData.m */; };
+		BA7B535C1BDBC36700355E8D /* BRTransaction+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = BA7B535B1BDBC36700355E8D /* BRTransaction+Utils.m */; };
+		BA7B53751BDBDB0500355E8D /* BRAWWatchDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA7B53741BDBDB0500355E8D /* BRAWWatchDataManager.swift */; };
 		BA913BE21BD57E4D005A7C0E /* Interface.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BA913BE01BD57E4D005A7C0E /* Interface.storyboard */; };
 		BA913BE41BD57E4D005A7C0E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BA913BE31BD57E4D005A7C0E /* Assets.xcassets */; };
 		BA913BEB1BD57E4D005A7C0E /* WatchApp Extension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = BA913BEA1BD57E4D005A7C0E /* WatchApp Extension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
@@ -81,6 +87,7 @@
 		BAA6E3ED1BD5C82400773205 /* BRAWSetupWalletInterfaceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAA6E3EC1BD5C82400773205 /* BRAWSetupWalletInterfaceController.swift */; };
 		BAA6E3EF1BD5CA0E00773205 /* BRAWBalanceInterfaceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAA6E3EE1BD5CA0E00773205 /* BRAWBalanceInterfaceController.swift */; };
 		BAA6E3F11BD5CA5900773205 /* BRAWReceiveMoneyInterfaceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAA6E3F01BD5CA5900773205 /* BRAWReceiveMoneyInterfaceController.swift */; };
+		BAC7B6BE1BD9C29900165B84 /* BRPhoneWCSessionManager.m in Sources */ = {isa = PBXBuildFile; fileRef = BAC7B6BD1BD9C29900165B84 /* BRPhoneWCSessionManager.m */; };
 		BAE12BF21B2DEE7F00895CC5 /* TodayExtension.appex in Embed App Extensions */ = {isa = PBXBuildFile; fileRef = BAE12BE51B2DEE7F00895CC5 /* TodayExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		BAE12C061B2DEEF700895CC5 /* BRTodayViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = BAE12C051B2DEEF700895CC5 /* BRTodayViewController.m */; };
 /* End PBXBuildFile section */
@@ -356,6 +363,16 @@
 		BA6645911BD92330007A6BB1 /* BRAWBalanceRowControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BRAWBalanceRowControl.swift; sourceTree = "<group>"; };
 		BA6645931BD9249B007A6BB1 /* BRAWTransactionHeaderRowControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BRAWTransactionHeaderRowControl.swift; sourceTree = "<group>"; };
 		BA6645951BD924EB007A6BB1 /* BRAWTransactionRowControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BRAWTransactionRowControl.swift; sourceTree = "<group>"; };
+		BA7B534E1BDA9A2800355E8D /* BRAppleWatchData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BRAppleWatchData.h; sourceTree = "<group>"; };
+		BA7B534F1BDA9A2800355E8D /* BRAppleWatchData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BRAppleWatchData.m; sourceTree = "<group>"; };
+		BA7B53521BDAA0A800355E8D /* BRAppleWatchTransactionData.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BRAppleWatchTransactionData.h; sourceTree = "<group>"; };
+		BA7B53531BDAA0A800355E8D /* BRAppleWatchTransactionData.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BRAppleWatchTransactionData.m; sourceTree = "<group>"; };
+		BA7B535A1BDBC36700355E8D /* BRTransaction+Utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "BRTransaction+Utils.h"; sourceTree = "<group>"; };
+		BA7B535B1BDBC36700355E8D /* BRTransaction+Utils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "BRTransaction+Utils.m"; sourceTree = "<group>"; };
+		BA7B53651BDBD04F00355E8D /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = Platforms/WatchOS.platform/Developer/SDKs/WatchOS2.0.sdk/System/Library/Frameworks/CoreGraphics.framework; sourceTree = DEVELOPER_DIR; };
+		BA7B53671BDBD07F00355E8D /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Platforms/WatchOS.platform/Developer/SDKs/WatchOS2.0.sdk/System/Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
+		BA7B53691BDBD08A00355E8D /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = Platforms/WatchOS.platform/Developer/SDKs/WatchOS2.0.sdk/System/Library/Frameworks/ImageIO.framework; sourceTree = DEVELOPER_DIR; };
+		BA7B53741BDBDB0500355E8D /* BRAWWatchDataManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BRAWWatchDataManager.swift; sourceTree = "<group>"; };
 		BA913BDE1BD57E4D005A7C0E /* WatchApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WatchApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BA913BE11BD57E4D005A7C0E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Interface.storyboard; sourceTree = "<group>"; };
 		BA913BE31BD57E4D005A7C0E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -371,6 +388,10 @@
 		BAA6E3EC1BD5C82400773205 /* BRAWSetupWalletInterfaceController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BRAWSetupWalletInterfaceController.swift; sourceTree = "<group>"; };
 		BAA6E3EE1BD5CA0E00773205 /* BRAWBalanceInterfaceController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BRAWBalanceInterfaceController.swift; sourceTree = "<group>"; };
 		BAA6E3F01BD5CA5900773205 /* BRAWReceiveMoneyInterfaceController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BRAWReceiveMoneyInterfaceController.swift; sourceTree = "<group>"; };
+		BAC7B6BC1BD9C29900165B84 /* BRPhoneWCSessionManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BRPhoneWCSessionManager.h; sourceTree = "<group>"; };
+		BAC7B6BD1BD9C29900165B84 /* BRPhoneWCSessionManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BRPhoneWCSessionManager.m; sourceTree = "<group>"; };
+		BAC7B6C41BD9C9B600165B84 /* WatchApp Extension-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "WatchApp Extension-Bridging-Header.h"; sourceTree = "<group>"; };
+		BAC7B6C81BD9CA8400165B84 /* BRAppleWatchSharedConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BRAppleWatchSharedConstants.h; sourceTree = "<group>"; };
 		BAE12BE51B2DEE7F00895CC5 /* TodayExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = TodayExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		BAE12BE61B2DEE7F00895CC5 /* NotificationCenter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = NotificationCenter.framework; path = System/Library/Frameworks/NotificationCenter.framework; sourceTree = SDKROOT; };
 		BAE12BEA1B2DEE7F00895CC5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -499,6 +520,8 @@
 				752E28E219234DA200DB5A3C /* NSManagedObject+Sugar.m */,
 				BAA4843A1B3EFFAF0075C749 /* UIImage+Utils.h */,
 				BAA4843B1B3EFFAF0075C749 /* UIImage+Utils.m */,
+				BA7B535A1BDBC36700355E8D /* BRTransaction+Utils.h */,
+				BA7B535B1BDBC36700355E8D /* BRTransaction+Utils.m */,
 			);
 			name = Categories;
 			sourceTree = "<group>";
@@ -619,6 +642,9 @@
 		75D5F3C0191EC270004AB296 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				BA7B53691BDBD08A00355E8D /* ImageIO.framework */,
+				BA7B53671BDBD07F00355E8D /* UIKit.framework */,
+				BA7B53651BDBD04F00355E8D /* CoreGraphics.framework */,
 				BAE12BE61B2DEE7F00895CC5 /* NotificationCenter.framework */,
 			);
 			name = Frameworks;
@@ -627,6 +653,7 @@
 		75D5F3C7191EC270004AB296 /* BreadWallet */ = {
 			isa = PBXGroup;
 			children = (
+				BAC7B6BF1BD9C2B500165B84 /* AppleWatch */,
 				752E289C19234A4700DB5A3C /* Models */,
 				752E289B19234A3F00DB5A3C /* Views */,
 				75BA5D02192296010040304C /* Controllers */,
@@ -688,6 +715,7 @@
 		BA913BEE1BD57E4D005A7C0E /* WatchApp Extension */ = {
 			isa = PBXGroup;
 			children = (
+				BAC7B6C41BD9C9B600165B84 /* WatchApp Extension-Bridging-Header.h */,
 				BAA6E3EA1BD5C78500773205 /* BRAWRootInterfaceController.swift */,
 				BAA6E3EC1BD5C82400773205 /* BRAWSetupWalletInterfaceController.swift */,
 				BAA6E3EE1BD5CA0E00773205 /* BRAWBalanceInterfaceController.swift */,
@@ -697,10 +725,25 @@
 				BA6645951BD924EB007A6BB1 /* BRAWTransactionRowControl.swift */,
 				BAA0E8C91BD9273700DF4236 /* BRAWGlanceInterfaceController.swift */,
 				BA913BF11BD57E4D005A7C0E /* ExtensionDelegate.swift */,
+				BA7B53741BDBDB0500355E8D /* BRAWWatchDataManager.swift */,
 				BA913BF51BD57E4D005A7C0E /* Assets.xcassets */,
 				BA913BF71BD57E4D005A7C0E /* Info.plist */,
 			);
 			path = "WatchApp Extension";
+			sourceTree = "<group>";
+		};
+		BAC7B6BF1BD9C2B500165B84 /* AppleWatch */ = {
+			isa = PBXGroup;
+			children = (
+				BAC7B6C81BD9CA8400165B84 /* BRAppleWatchSharedConstants.h */,
+				BAC7B6BC1BD9C29900165B84 /* BRPhoneWCSessionManager.h */,
+				BAC7B6BD1BD9C29900165B84 /* BRPhoneWCSessionManager.m */,
+				BA7B534E1BDA9A2800355E8D /* BRAppleWatchData.h */,
+				BA7B534F1BDA9A2800355E8D /* BRAppleWatchData.m */,
+				BA7B53521BDAA0A800355E8D /* BRAppleWatchTransactionData.h */,
+				BA7B53531BDAA0A800355E8D /* BRAppleWatchTransactionData.m */,
+			);
+			name = AppleWatch;
 			sourceTree = "<group>";
 		};
 		BAE12BE81B2DEE7F00895CC5 /* TodayExtension */ = {
@@ -984,11 +1027,13 @@
 				752E28AA19234AE300DB5A3C /* BRAddressEntity.m in Sources */,
 				75AA5F55194143D5003F23BD /* BRBouncyBurgerButton.m in Sources */,
 				752E28AB19234AE300DB5A3C /* BRMerkleBlockEntity.m in Sources */,
+				BA7B53501BDA9A2800355E8D /* BRAppleWatchData.m in Sources */,
 				752E28AC19234AE300DB5A3C /* BRPeerEntity.m in Sources */,
 				752E28AD19234AE300DB5A3C /* BRTransactionEntity.m in Sources */,
 				752E28AE19234AE300DB5A3C /* BRTxInputEntity.m in Sources */,
 				752E28AF19234AE300DB5A3C /* BRTxOutputEntity.m in Sources */,
 				BAA4843C1B3EFFAF0075C749 /* UIImage+Utils.m in Sources */,
+				BA7B535C1BDBC36700355E8D /* BRTransaction+Utils.m in Sources */,
 				758DBD0E1980634900389E2A /* BRTxDetailViewController.m in Sources */,
 				7548CF3719556FD700EF827F /* BRCopyLabel.m in Sources */,
 				752E28D119234C3600DB5A3C /* BRKey.m in Sources */,
@@ -998,6 +1043,7 @@
 				220460551BA0BEEE00D07B61 /* BREventConfirmView.m in Sources */,
 				752E28D919234C3600DB5A3C /* BRTransaction.m in Sources */,
 				752E28CE19234C3600DB5A3C /* BRBIP32Sequence.m in Sources */,
+				BAC7B6BE1BD9C29900165B84 /* BRPhoneWCSessionManager.m in Sources */,
 				752E28CF19234C3600DB5A3C /* BRBIP39Mnemonic.m in Sources */,
 				752E28DA19234C3600DB5A3C /* BRWallet.m in Sources */,
 				752E28DB19234C3600DB5A3C /* BRWalletManager.m in Sources */,
@@ -1016,6 +1062,7 @@
 				757BE7E9192D4E880061CB20 /* BRSeedViewController.m in Sources */,
 				752E28E719234DA200DB5A3C /* NSData+Bitcoin.m in Sources */,
 				752E28E919234DA200DB5A3C /* NSManagedObject+Sugar.m in Sources */,
+				BA7B53541BDAA0A800355E8D /* BRAppleWatchTransactionData.m in Sources */,
 				751B2B5C1B68911700EA87FB /* BRTxHistoryViewController.m in Sources */,
 				752E28EA19234DA200DB5A3C /* NSMutableData+Bitcoin.m in Sources */,
 				752E28EB19234DA200DB5A3C /* NSString+Bitcoin.m in Sources */,
@@ -1041,10 +1088,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				BA7B53551BDAA0A800355E8D /* BRAppleWatchTransactionData.m in Sources */,
+				BA7B53751BDBDB0500355E8D /* BRAWWatchDataManager.swift in Sources */,
 				BAA6E3F11BD5CA5900773205 /* BRAWReceiveMoneyInterfaceController.swift in Sources */,
 				BAA0E8CA1BD9273700DF4236 /* BRAWGlanceInterfaceController.swift in Sources */,
 				BA6645941BD9249B007A6BB1 /* BRAWTransactionHeaderRowControl.swift in Sources */,
 				BA6645921BD92330007A6BB1 /* BRAWBalanceRowControl.swift in Sources */,
+				BA7B53511BDA9A2800355E8D /* BRAppleWatchData.m in Sources */,
 				BAA6E3EF1BD5CA0E00773205 /* BRAWBalanceInterfaceController.swift in Sources */,
 				BA913BF21BD57E4D005A7C0E /* ExtensionDelegate.swift in Sources */,
 				BA6645961BD924EB007A6BB1 /* BRAWTransactionRowControl.swift in Sources */,
@@ -1416,6 +1466,7 @@
 		BA913BFD1BD57E4E005A7C0E /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				INFOPLIST_FILE = "WatchApp Extension/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
@@ -1423,6 +1474,7 @@
 				PRODUCT_NAME = "${TARGET_NAME}";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "WatchApp Extension/WatchApp Extension-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				TARGETED_DEVICE_FAMILY = 4;
 				WATCHOS_DEPLOYMENT_TARGET = 2.0;
@@ -1432,6 +1484,7 @@
 		BA913BFE1BD57E4E005A7C0E /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				INFOPLIST_FILE = "WatchApp Extension/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../../Frameworks";
@@ -1439,6 +1492,7 @@
 				PRODUCT_NAME = "${TARGET_NAME}";
 				SDKROOT = watchos;
 				SKIP_INSTALL = YES;
+				SWIFT_OBJC_BRIDGING_HEADER = "WatchApp Extension/WatchApp Extension-Bridging-Header.h";
 				TARGETED_DEVICE_FAMILY = 4;
 				WATCHOS_DEPLOYMENT_TARGET = 2.0;
 			};
