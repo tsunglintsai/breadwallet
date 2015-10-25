@@ -29,6 +29,7 @@
 #import "BRWalletManager.h"
 #import "BRPaymentRequest.h"
 #import "UIImage+Utils.h"
+#import "BRAppleWatchTransactionData+Factory.h"
 
 @interface BRPhoneWCSessionManager()<WCSessionDelegate>
 @end
@@ -81,11 +82,9 @@
     NSArray *transactions = manager.wallet.recentTransactions;
     
     NSMutableArray *transactionData = [[NSMutableArray alloc] init];
-//    BRAppleWatchTransactionData *appleWatchTransactionData = [[BRAppleWatchTransactionData alloc] init];
-//    appleWatchTransactionData.amount = @100;
-//    appleWatchTransactionData.amountInLocalCurrency = @"amountInLocalCurrency";
-//    appleWatchTransactionData.date = [NSDate date];
-//    [transactionData addObject:appleWatchTransactionData];
+    [transactionData addObject:[BRAppleWatchTransactionData appleWatchTransactionDataWithAmount:@"100" amountInlocalCurrency:@"101" date:@"10/10/2015"]];
+    [transactionData addObject:[BRAppleWatchTransactionData appleWatchTransactionDataWithAmount:@"200" amountInlocalCurrency:@"201" date:@"10/11/2015"]];
+    [transactionData addObject:[BRAppleWatchTransactionData appleWatchTransactionDataWithAmount:@"300" amountInlocalCurrency:@"301" date:@"10/12/2015"]];
     
     UIImage *qrCodeImage = [UIImage imageWithQRCodeData:[BRPaymentRequest requestWithString:manager.wallet.receiveAddress].data size:CGSizeMake(160, 160)
                                                color:[CIColor colorWithRed:0.0 green:0.0 blue:0.0]];

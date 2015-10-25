@@ -58,4 +58,11 @@
         return [manager stringForAmount:received];
     }
 }
+
+- (NSString*)date {
+    // TODO : is there any way to move formatting from BRTxHistoryViewController to here.
+    NSDateFormatter *df = [[NSDateFormatter alloc] init];
+    df.dateStyle = NSDateFormatterMediumStyle;
+    return [NSString stringWithFormat:@"%@", [df stringFromDate:[NSDate date]]];
+}
 @end

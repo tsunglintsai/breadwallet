@@ -27,49 +27,87 @@ import WatchKit
 
 class BRAWBalanceInterfaceController: WKInterfaceController {
     @IBOutlet var table: WKInterfaceTable!
+    var transactionList = [BRAppleWatchTransactionData]()
 
+    @IBOutlet var balanceTextContainer: WKInterfaceGroup!
+    @IBOutlet var balanceLoadingIndicator: WKInterfaceGroup!
+    @IBOutlet var balanceLabel: WKInterfaceLabel!
+    @IBOutlet var balanceInLocalCurrencyLabel: WKInterfaceLabel!
+    @IBOutlet var transactionHeaderContainer: WKInterfaceGroup! {
+        didSet {
+            transactionHeaderContainer.setHidden(true) // hide header as default
+        }
+    }
+    
+    var showBalanceLoadingIndicator = false {
+        didSet{
+            self.balanceTextContainer.setHidden(showBalanceLoadingIndicator)
+            self.balanceLoadingIndicator.setHidden(!showBalanceLoadingIndicator)
+        }
+    }
+    
     // MARK: View life cycle
     
     override func awakeWithContext(context: AnyObject?) {
         super.awakeWithContext(context)
-        setupBalanceRow()
+        updateBalance()
     }
 
     override func willActivate() {
         // This method is called when watch view controller is about to be visible to user
         super.willActivate()
-//        self.mockData()
         updateBalance()
+        updateTransactionList()
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "updateBalance", name: BRAWWatchDataManager.BalanceDidUpdateNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "updateTransactionList", name: BRAWWatchDataManager.TransactionDidUpdateNotification, object: nil)
     }
     
     override func didDeactivate() {
         // This method is called when watch view controller is no longer visible
         super.didDeactivate()
+        NSNotificationCenter.defaultCenter().removeObserver(self)
     }
     
     // MARK: UI update
     
-    func setupBalanceRow() {
-        table.setNumberOfRows(1, withRowType: "BRAWBalanceRowControl")
-        updateBalance()
-    }
-    
     func updateBalance() {
-        let rowControlEvent = table.rowControllerAtIndex(0) as! BRAWBalanceRowControl
         if let balanceInLocalizationString = BRAWWatchDataManager.sharedInstance.balanceInLocalCurrency as String?, let originalBalanceString = BRAWWatchDataManager.sharedInstance.balance as? String {
             var balanceString = originalBalanceString.stringByReplacingOccurrencesOfString("ƀ"   , withString: "")
             balanceString = balanceString.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
-            rowControlEvent.bitBalance.setAttributedText(attributedStringForBalance(balanceString))
-            rowControlEvent.dollorBalance.setText(balanceInLocalizationString)
-            rowControlEvent.showLoadingIndicator = false;
+            balanceLabel.setAttributedText(attributedStringForBalance(balanceString))
+            balanceInLocalCurrencyLabel.setText(balanceInLocalizationString)
+            showBalanceLoadingIndicator = false;
         } else {
-            rowControlEvent.showLoadingIndicator = true;
+            showBalanceLoadingIndicator = true;
         }
     }
     
     func updateTransactionList() {
-        
+        transactionList = BRAWWatchDataManager.sharedInstance.transactionHistory
+        let currentTableRowCount = table.numberOfRows
+        let newTransactionCount = transactionList.count
+        let numberRowsToInsertOrDelete = newTransactionCount - currentTableRowCount
+        self.transactionHeaderContainer.setHidden(newTransactionCount == 0)
+        // insert or delete rows to match number of transactions
+        if (numberRowsToInsertOrDelete > 0) {
+            table.insertRowsAtIndexes(NSIndexSet(indexesInRange: NSMakeRange(currentTableRowCount, numberRowsToInsertOrDelete)), withRowType: "BRAWTransactionRowControl")
+        } else {
+            table.removeRowsAtIndexes(NSIndexSet(indexesInRange: NSMakeRange(newTransactionCount, abs(numberRowsToInsertOrDelete))))
+        }
+        // update row content
+        for var index = 0; index < newTransactionCount; index++  {
+            if let rowControl = table.rowControllerAtIndex(index) as? BRAWTransactionRowControl {
+                updateRow(rowControl, transaction: self.transactionList[index])
+            }
+        }
+    }
+    
+    func updateRow(rowControl: BRAWTransactionRowControl, transaction: BRAppleWatchTransactionData) {
+        rowControl.amountLabel.setText(transaction.amount)
+        rowControl.localCurrencyAmount.setText(transaction.amountInLocalCurrency)
+        rowControl.dateLabel.setText(transaction.date)
+        rowControl.isSendMoney = true
+        rowControl.seperatorGroup.setHeight(0.5)
     }
     
     // MARK: Helper methods
@@ -79,40 +117,6 @@ class BRAWBalanceInterfaceController: WKInterfaceController {
         attributedString.appendAttributedString(NSAttributedString(string: "ƀ", attributes: [NSForegroundColorAttributeName : UIColor.grayColor()]))
         attributedString.appendAttributedString(NSAttributedString(string: balance ?? "0", attributes: [NSForegroundColorAttributeName : UIColor.whiteColor()]))
         return attributedString
-    }
-    
-    func mockData() {
-        table.insertRowsAtIndexes(NSIndexSet(index: 1), withRowType: "BRAWTransactionHeaderRowControl")
-        table.insertRowsAtIndexes(NSIndexSet(index: 2), withRowType: "BRAWTransactionRowControl")
-        table.insertRowsAtIndexes(NSIndexSet(index: 3), withRowType: "BRAWTransactionRowControl")
-        table.insertRowsAtIndexes(NSIndexSet(index: 4), withRowType: "BRAWTransactionRowControl")
-        table.insertRowsAtIndexes(NSIndexSet(index: 5), withRowType: "BRAWTransactionRowControl")
-        
-        var rowControlEvent = table.rowControllerAtIndex(2) as! BRAWTransactionRowControl
-        rowControlEvent.amountLabel.setText("-ƀ10994")
-        rowControlEvent.localCurrencyAmount.setText("-$3.00")
-        rowControlEvent.seperatorGroup.setHeight(0.5)
-        rowControlEvent.isSendMoney = true
-        
-        rowControlEvent = table.rowControllerAtIndex(3) as! BRAWTransactionRowControl
-        rowControlEvent.amountLabel.setText("ƀ7329")
-        rowControlEvent.localCurrencyAmount.setText("$2.00")
-        rowControlEvent.seperatorGroup.setHeight(0.5)
-        rowControlEvent.isSendMoney = false
-        
-        rowControlEvent = table.rowControllerAtIndex(4) as! BRAWTransactionRowControl
-        rowControlEvent.amountLabel.setText("ƀ36647")
-        rowControlEvent.localCurrencyAmount.setText("$10.00")
-        rowControlEvent.seperatorGroup.setHeight(0.5)
-        rowControlEvent.isSendMoney = false
-        
-        rowControlEvent = table.rowControllerAtIndex(5) as! BRAWTransactionRowControl
-        rowControlEvent.amountLabel.setText("-ƀ21988")
-        rowControlEvent.localCurrencyAmount.setText("-$6.00")
-        rowControlEvent.seperatorGroup.setHeight(0.5)
-        rowControlEvent.isSendMoney = true
-        
-        
     }
 
 }

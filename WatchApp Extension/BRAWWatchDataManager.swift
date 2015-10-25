@@ -18,6 +18,7 @@ class BRAWWatchDataManager: NSObject, WCSessionDelegate {
     private(set) var balanceInLocalCurrency : NSString?
     private(set) var receiveMoneyAddress : NSString?
     private(set) var receiveMoneyQRCodeImage : UIImage?
+    private(set) var transactionHistory = [BRAppleWatchTransactionData]()
 
     override init() {
         super.init()
@@ -28,7 +29,7 @@ class BRAWWatchDataManager: NSObject, WCSessionDelegate {
     
     func sendRequest() {
         let messageToSend = [AW_SESSION_REQUEST_DATA_TYPE_KEY:NSNumber(unsignedInt:AWSessionRquestDataTypeTransactions.rawValue)]
-        WCSession.defaultSession().sendMessage(messageToSend, replyHandler: { replyMessage in
+        WCSession.defaultSession().sendMessage(messageToSend, replyHandler: { [unowned self] replyMessage in
             //handle and present the message on screen
             print("\(replyMessage)")
             if let data = replyMessage[AW_SESSION_RESPONSE_KEY] as? NSData {
@@ -38,15 +39,31 @@ class BRAWWatchDataManager: NSObject, WCSessionDelegate {
                     self.balanceInLocalCurrency = appleWatchData.balanceInLocalCurrency
                     self.receiveMoneyAddress = appleWatchData.receiveMoneyAddress
                     self.receiveMoneyQRCodeImage = appleWatchData.receiveMoneyQRCodeImage
+                    self.transactionHistory = appleWatchData.transactions
                     
                     NSNotificationCenter.defaultCenter().postNotificationName(BRAWWatchDataManager.BalanceDidUpdateNotification, object: nil)
                     NSNotificationCenter.defaultCenter().postNotificationName(BRAWWatchDataManager.ReceiveMoneyAddressDidUpdateNotification, object: nil)
                     NSNotificationCenter.defaultCenter().postNotificationName(BRAWWatchDataManager.TransactionDidUpdateNotification, object: nil)
+                    
                 }
             }
             }, errorHandler: {error in
                 // catch any errors here
                 print(error)
         })
+    }
+    
+    func simulateRemoveTransactions() {
+        transactionHistory.removeLast()
+        NSNotificationCenter.defaultCenter().postNotificationName(BRAWWatchDataManager.TransactionDidUpdateNotification, object: nil)
+    }
+    
+    func simulateAddTransactions() {
+        let transactionData = BRAppleWatchTransactionData()
+        transactionData.amount = "amount"
+        transactionData.amountInLocalCurrency = "amount in local"
+        transactionData.date = NSDate().description
+        transactionHistory.insert(transactionData, atIndex: transactionHistory.count)
+        NSNotificationCenter.defaultCenter().postNotificationName(BRAWWatchDataManager.TransactionDidUpdateNotification, object: nil)
     }
 }
