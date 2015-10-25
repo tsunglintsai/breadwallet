@@ -31,13 +31,13 @@ class BRAWReceiveMoneyInterfaceController: WKInterfaceController, WCSessionDeleg
     @IBOutlet var qrCodeImage: WKInterfaceImage!
     override func awakeWithContext(context: AnyObject?) {
         super.awakeWithContext(context)
-        self.updateReceiveUI()
         // Configure interface objects here.
     }
 
     override func willActivate() {
         // This method is called when watch view controller is about to be visible to user
         super.willActivate()
+        self.updateReceiveUI()
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "updateReceiveUI", name: BRAWWatchDataManager.ReceiveMoneyAddressDidUpdateNotification, object: nil)
     }
 

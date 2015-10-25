@@ -81,10 +81,11 @@
                         <table alignment="left" id="PZF-P6-QtU">
                             <items>
                                 <tableRow identifier="BRAWBalanceRowControl" selectable="NO" id="lmR-Nf-Ujh" customClass="BRAWBalanceRowControl" customModule="WatchApp_Extension">
-                                    <group key="rootItem" width="1" height="174" alignment="left" layout="vertical" spacing="0.0" id="7iU-3a-55V" userLabel="Balance row container">
+                                    <group key="rootItem" width="1" height="0.0" alignment="left" layout="vertical" spacing="0.0" id="7iU-3a-55V" userLabel="Balance row container">
                                         <items>
-                                            <group width="1" height="140" alignment="left" id="K5k-gF-zP8" userLabel="Top container">
+                                            <group width="1" height="154" alignment="left" layout="vertical" id="K5k-gF-zP8" userLabel="Top container">
                                                 <items>
+                                                    <group width="30" height="30" alignment="center" verticalAlignment="center" backgroundImage="LoadingIndicator" id="DjW-LY-zat"/>
                                                     <group width="1" alignment="left" verticalAlignment="center" layout="vertical" spacing="0.0" id="jKA-oS-2q3" userLabel="Text container">
                                                         <items>
                                                             <label alignment="left" text="ƀ1,000,000" minimumScaleFactor="0.5" id="kmM-c3-2G4" userLabel="Bit balance">
@@ -100,30 +101,26 @@
                                                         <edgeInsets key="margins" left="0.0" right="0.0" top="0.0" bottom="0.0"/>
                                                     </group>
                                                 </items>
-                                                <variation key="device=watch38mm" height="100"/>
+                                                <variation key="device=watch38mm" height="130"/>
                                             </group>
-                                            <group width="20" height="4" alignment="center" verticalAlignment="bottom" radius="2" id="Cul-Jj-mj9" userLabel="More item UI treatment">
-                                                <color key="backgroundColor" white="0.66666666669999997" alpha="0.5" colorSpace="calibratedWhite"/>
-                                                <edgeInsets key="margins" left="0.0" right="0.0" top="0.0" bottom="0.0"/>
-                                            </group>
-                                            <group width="1" height="12" alignment="left" verticalAlignment="bottom" id="ji2-0e-p5R" userLabel="Padding to hide page indicator"/>
                                         </items>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                        <variation key="device=watch38mm" height="150"/>
-                                        <variation key="device=watch42mm">
-                                            <mask key="items">
-                                                <include reference="Cul-Jj-mj9"/>
-                                            </mask>
-                                        </variation>
                                     </group>
                                     <connections>
                                         <outlet property="bitBalance" destination="kmM-c3-2G4" id="or3-Uy-Vnk"/>
                                         <outlet property="dollorBalance" destination="xbl-pX-Pdl" id="94G-oV-oBB"/>
+                                        <outlet property="loadingIndicator" destination="DjW-LY-zat" id="TjK-sA-3cb"/>
+                                        <outlet property="textContainerGroup" destination="jKA-oS-2q3" id="xDA-KP-cON"/>
                                     </connections>
                                 </tableRow>
                                 <tableRow identifier="BRAWTransactionHeaderRowControl" selectable="NO" id="My9-d2-IuK" customClass="BRAWTransactionHeaderRowControl" customModule="WatchApp_Extension">
-                                    <group key="rootItem" width="1" height="20" alignment="left" layout="vertical" spacing="0.0" id="Pfb-IG-Ydf" userLabel="Transaction row header container">
+                                    <group key="rootItem" width="1" height="0.0" alignment="left" layout="vertical" spacing="0.0" id="Pfb-IG-Ydf" userLabel="Transaction row header container">
                                         <items>
+                                            <group width="20" height="4" alignment="center" radius="2" id="Cul-Jj-mj9" userLabel="More item UI treatment">
+                                                <color key="backgroundColor" white="0.66666666669999997" alpha="0.5" colorSpace="calibratedWhite"/>
+                                                <edgeInsets key="margins" left="0.0" right="0.0" top="0.0" bottom="0.0"/>
+                                            </group>
+                                            <group width="1" height="12" alignment="left" id="ji2-0e-p5R" userLabel="Padding to hide page indicator"/>
                                             <group width="1" alignment="left" radius="2" id="RPA-uN-IAO" userLabel="Background group">
                                                 <items>
                                                     <label alignment="center" text="Transactions" id="r80-H8-ngA">

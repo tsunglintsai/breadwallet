@@ -28,7 +28,13 @@ import WatchKit
 class BRAWBalanceRowControl: NSObject {
 
     @IBOutlet var bitBalance: WKInterfaceLabel!
-    
     @IBOutlet var dollorBalance: WKInterfaceLabel!
-
+    @IBOutlet var loadingIndicator: WKInterfaceGroup!
+    @IBOutlet var textContainerGroup: WKInterfaceGroup!
+    var showLoadingIndicator = true {
+        didSet {
+            self.textContainerGroup.setHidden(showLoadingIndicator)
+            self.loadingIndicator.setHidden(!showLoadingIndicator)
+        }
+    }
 }

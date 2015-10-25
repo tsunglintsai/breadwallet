@@ -28,21 +28,60 @@ import WatchKit
 class BRAWBalanceInterfaceController: WKInterfaceController {
     @IBOutlet var table: WKInterfaceTable!
 
+    // MARK: View life cycle
+    
     override func awakeWithContext(context: AnyObject?) {
         super.awakeWithContext(context)
-        
-        // Configure interface objects here.
+        setupBalanceRow()
     }
 
     override func willActivate() {
         // This method is called when watch view controller is about to be visible to user
         super.willActivate()
-        self.mockData()
+//        self.mockData()
+        updateBalance()
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "updateBalance", name: BRAWWatchDataManager.BalanceDidUpdateNotification, object: nil)
     }
     
+    override func didDeactivate() {
+        // This method is called when watch view controller is no longer visible
+        super.didDeactivate()
+    }
+    
+    // MARK: UI update
+    
+    func setupBalanceRow() {
+        table.setNumberOfRows(1, withRowType: "BRAWBalanceRowControl")
+        updateBalance()
+    }
+    
+    func updateBalance() {
+        let rowControlEvent = table.rowControllerAtIndex(0) as! BRAWBalanceRowControl
+        if let balanceInLocalizationString = BRAWWatchDataManager.sharedInstance.balanceInLocalCurrency as String?, let originalBalanceString = BRAWWatchDataManager.sharedInstance.balance as? String {
+            var balanceString = originalBalanceString.stringByReplacingOccurrencesOfString("ƀ"   , withString: "")
+            balanceString = balanceString.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
+            rowControlEvent.bitBalance.setAttributedText(attributedStringForBalance(balanceString))
+            rowControlEvent.dollorBalance.setText(balanceInLocalizationString)
+            rowControlEvent.showLoadingIndicator = false;
+        } else {
+            rowControlEvent.showLoadingIndicator = true;
+        }
+    }
+    
+    func updateTransactionList() {
+        
+    }
+    
+    // MARK: Helper methods
+    
+    func attributedStringForBalance(balance: String?)-> NSAttributedString {
+        let attributedString = NSMutableAttributedString()
+        attributedString.appendAttributedString(NSAttributedString(string: "ƀ", attributes: [NSForegroundColorAttributeName : UIColor.grayColor()]))
+        attributedString.appendAttributedString(NSAttributedString(string: balance ?? "0", attributes: [NSForegroundColorAttributeName : UIColor.whiteColor()]))
+        return attributedString
+    }
     
     func mockData() {
-        table.setNumberOfRows(1, withRowType: "BRAWBalanceRowControl")
         table.insertRowsAtIndexes(NSIndexSet(index: 1), withRowType: "BRAWTransactionHeaderRowControl")
         table.insertRowsAtIndexes(NSIndexSet(index: 2), withRowType: "BRAWTransactionRowControl")
         table.insertRowsAtIndexes(NSIndexSet(index: 3), withRowType: "BRAWTransactionRowControl")
@@ -54,7 +93,7 @@ class BRAWBalanceInterfaceController: WKInterfaceController {
         rowControlEvent.localCurrencyAmount.setText("-$3.00")
         rowControlEvent.seperatorGroup.setHeight(0.5)
         rowControlEvent.isSendMoney = true
-
+        
         rowControlEvent = table.rowControllerAtIndex(3) as! BRAWTransactionRowControl
         rowControlEvent.amountLabel.setText("ƀ7329")
         rowControlEvent.localCurrencyAmount.setText("$2.00")
@@ -73,21 +112,7 @@ class BRAWBalanceInterfaceController: WKInterfaceController {
         rowControlEvent.seperatorGroup.setHeight(0.5)
         rowControlEvent.isSendMoney = true
         
-        let rowControlBalance = table.rowControllerAtIndex(0) as! BRAWBalanceRowControl
-        rowControlBalance.bitBalance.setAttributedText(self.attributedString())
-
-    }
-    
-    func attributedString()-> NSAttributedString {
-        let attributedString = NSMutableAttributedString()
-        attributedString.appendAttributedString(NSAttributedString(string: "ƀ", attributes: [NSForegroundColorAttributeName : UIColor.grayColor()]))
-        attributedString.appendAttributedString(NSAttributedString(string: "1,000,000", attributes: [NSForegroundColorAttributeName : UIColor.whiteColor()]))
-        return attributedString
-    }
-
-    override func didDeactivate() {
-        // This method is called when watch view controller is no longer visible
-        super.didDeactivate()
+        
     }
 
 }
