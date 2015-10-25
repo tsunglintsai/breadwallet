@@ -14,7 +14,9 @@
 @property (nonatomic, strong) NSString *balance;
 @property (nonatomic, strong) NSString *balanceInLocalCurrency;
 @property (nonatomic, strong) NSString *receiveMoneyAddress;
+@property (nonatomic, strong) NSString *lastestTransction;
 // There is no cifilter in watchOS 2, so we have to pass image over.
 @property (nonatomic, strong) UIImage *receiveMoneyQRCodeImage;
 @property (nonatomic, strong) NSArray<BRAppleWatchTransactionData*> *transactions;
+@property (nonatomic) BOOL hasWallet;
 @end

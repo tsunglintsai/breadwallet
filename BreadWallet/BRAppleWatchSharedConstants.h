@@ -31,6 +31,8 @@
 #define AW_SESSION_REQUEST_DATA_TYPE_KEY        @"AW_SESSION_REQUEST_DATA_TYPE_KEY"
 
 typedef enum {
+    AWSessionRquestDataTypeAllData,
+    AWSessionRquestDataTypeGlanceData,
     AWSessionRquestDataTypeBalance,
     AWSessionRquestDataTypeTransactions,
     AWSessionRquestDataTypeReceiveMoneyQR,

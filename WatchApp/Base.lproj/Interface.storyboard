@@ -35,9 +35,15 @@
                         </group>
                         <group alignment="left" layout="vertical" id="eew-Gs-W6Y" userLabel="Bottom group">
                             <items>
+                                <group width="30" height="30" alignment="center" verticalAlignment="center" backgroundImage="LoadingIndicator" id="9vJ-Sn-Eit" userLabel="Loading indicator"/>
                                 <group width="1" alignment="left" id="7AP-2v-fcP" userLabel="Setup wallet message container">
                                     <items>
                                         <label alignment="center" verticalAlignment="center" text="Open Breadwallet iPhone app to setup your wallet" textAlignment="left" numberOfLines="0" id="Gat-bm-t3w"/>
+                                    </items>
+                                </group>
+                                <group width="1" alignment="left" id="LeG-mg-bUy" userLabel="Cannot connect iPhone message container">
+                                    <items>
+                                        <label alignment="center" verticalAlignment="center" text="Connection to iPhone is lost. Please try again later" textAlignment="left" numberOfLines="0" id="f3B-Fb-Auw"/>
                                     </items>
                                 </group>
                                 <group width="1" alignment="left" layout="vertical" id="z73-6R-jav" userLabel="Balance info container">
@@ -66,7 +72,11 @@
                     <edgeInsets key="margins" left="0.0" right="0.0" top="0.0" bottom="14"/>
                     <connections>
                         <outlet property="balanceAmountLabel" destination="oAt-M3-LfO" id="KJX-NY-fKT"/>
+                        <outlet property="balanceInLocalCurrencyLabel" destination="6Qe-WS-tck" id="KVb-6e-hDL"/>
                         <outlet property="balanceInfoContainer" destination="z73-6R-jav" id="VHP-7n-ewE"/>
+                        <outlet property="cannotConnectIPhoneMessageContainer" destination="LeG-mg-bUy" id="8in-ie-QXM"/>
+                        <outlet property="lastTransactionLabel" destination="jqM-V4-RYz" id="cHi-4e-bIN"/>
+                        <outlet property="loadingIndicator" destination="9vJ-Sn-Eit" id="Mhk-ud-QM2"/>
                         <outlet property="setupWalletContainer" destination="7AP-2v-fcP" id="sk5-hX-hUI"/>
                     </connections>
                 </glanceController>
@@ -110,14 +120,15 @@
                                     <edgeInsets key="margins" left="0.0" right="0.0" top="0.0" bottom="0.0"/>
                                 </group>
                                 <group width="1" height="16" alignment="left" id="ji2-0e-p5R" userLabel="Padding to hide page indicator"/>
-                                <group width="1" alignment="left" radius="2" id="RPA-uN-IAO" userLabel="Background group">
+                                <group width="1" alignment="left" radius="6" spacing="0.0" id="RPA-uN-IAO" userLabel="Background group">
                                     <items>
                                         <label alignment="center" text="Transactions" id="r80-H8-ngA">
-                                            <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <color key="textColor" red="0.99215686274509807" green="0.60392156862745094" blue="0.27843137254901962" alpha="1" colorSpace="calibratedRGB"/>
                                             <fontDescription key="font" type="system" pointSize="14"/>
                                         </label>
                                     </items>
-                                    <color key="backgroundColor" red="1" green="0.44765445659999997" blue="0.066495729439999998" alpha="0.30078125" colorSpace="calibratedRGB"/>
+                                    <color key="backgroundColor" red="0.95414897213874406" green="0.95603434098151463" blue="1" alpha="0.14658133865248227" colorSpace="calibratedRGB"/>
+                                    <edgeInsets key="margins" left="0.0" right="0.0" top="0.0" bottom="0.0"/>
                                 </group>
                             </items>
                         </group>
@@ -188,14 +199,20 @@
             <objects>
                 <controller identifier="BRAWReceiveMoneyInterfaceController" title="Receive Money" hidesWhenLoading="NO" id="3Fr-v5-6pR" customClass="BRAWReceiveMoneyInterfaceController" customModule="WatchApp_Extension">
                     <items>
-                        <group width="1" height="1" alignment="left" id="bb9-3d-Jxv" userLabel="Image container">
+                        <group width="30" height="30" alignment="center" verticalAlignment="center" backgroundImage="LoadingIndicator" id="aGe-pD-wDv" userLabel="Loading indicator"/>
+                        <group width="136" height="136" alignment="center" verticalAlignment="center" spacing="0.0" id="bb9-3d-Jxv" userLabel="Image container">
                             <items>
-                                <imageView width="130" height="130" alignment="center" verticalAlignment="center" id="zcl-13-Lom"/>
+                                <imageView width="130" height="130" alignment="center" verticalAlignment="center" id="zcl-13-Lom">
+                                    <variation key="device=watch42mm" height="150" width="150"/>
+                                </imageView>
                             </items>
                             <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                            <variation key="device=watch42mm" height="156" width="156"/>
                         </group>
                     </items>
                     <connections>
+                        <outlet property="imageContainer" destination="bb9-3d-Jxv" id="omG-C3-LeL"/>
+                        <outlet property="loadingIndicator" destination="aGe-pD-wDv" id="wQX-Fb-QF0"/>
                         <outlet property="qrCodeImage" destination="zcl-13-Lom" id="ZBn-z4-mZ8"/>
                     </connections>
                 </controller>

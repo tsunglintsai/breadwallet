@@ -21,15 +21,6 @@
     return appleWatchTransactionData;
 }
 
-+ (instancetype)dummyAppleWatchTransactionData {
-    BRAppleWatchTransactionData *appleWatchTransactionData;
-    appleWatchTransactionData = [[BRAppleWatchTransactionData alloc] init];
-    appleWatchTransactionData.amount = @"9600";
-    appleWatchTransactionData.amountInLocalCurrency = @"$13.55";
-    appleWatchTransactionData.date = @"11/12/2015";
-    return appleWatchTransactionData;
-}
-
 + (instancetype)appleWatchTransactionDataWithAmount:(NSString*)amount
                               amountInlocalCurrency:(NSString*)amountInlocalCurrency
                                                date:(NSString*)date {

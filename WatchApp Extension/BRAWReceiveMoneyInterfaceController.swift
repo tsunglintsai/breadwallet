@@ -28,6 +28,8 @@ import WatchConnectivity
 
 class BRAWReceiveMoneyInterfaceController: WKInterfaceController, WCSessionDelegate {
 
+    @IBOutlet var loadingIndicator: WKInterfaceGroup!
+    @IBOutlet var imageContainer: WKInterfaceGroup!
     @IBOutlet var qrCodeImage: WKInterfaceImage!
     override func awakeWithContext(context: AnyObject?) {
         super.awakeWithContext(context)
@@ -37,7 +39,7 @@ class BRAWReceiveMoneyInterfaceController: WKInterfaceController, WCSessionDeleg
     override func willActivate() {
         // This method is called when watch view controller is about to be visible to user
         super.willActivate()
-        self.updateReceiveUI()
+        updateReceiveUI()
         NSNotificationCenter.defaultCenter().addObserver(self, selector: "updateReceiveUI", name: BRAWWatchDataManager.ReceiveMoneyAddressDidUpdateNotification, object: nil)
     }
 
@@ -48,7 +50,14 @@ class BRAWReceiveMoneyInterfaceController: WKInterfaceController, WCSessionDeleg
     }
     
     func updateReceiveUI() {
-        self.qrCodeImage.setImage(BRAWWatchDataManager.sharedInstance.receiveMoneyQRCodeImage)
+        if BRAWWatchDataManager.sharedInstance.receiveMoneyQRCodeImage == nil {
+            loadingIndicator.setHidden(false)
+            imageContainer.setHidden(true)
+        } else {
+            loadingIndicator.setHidden(true)
+            imageContainer.setHidden(false)
+            qrCodeImage.setImage(BRAWWatchDataManager.sharedInstance.receiveMoneyQRCodeImage)
+        }
     }
 
 }

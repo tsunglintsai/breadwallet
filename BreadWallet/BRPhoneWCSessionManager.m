@@ -56,6 +56,12 @@
 #pragma mark - WKSession delegate
 - (void)session:(WCSession *)session didReceiveMessage:(NSDictionary<NSString *, id> *)message replyHandler:(void(^)(NSDictionary<NSString *, id> *replyMessage))replyHandler {
     switch ([message[AW_SESSION_REQUEST_DATA_TYPE_KEY] integerValue]) {
+        case AWSessionRquestDataTypeAllData:
+            [self handleAllDataRequest:message replyHandler:replyHandler];
+            break;
+        case AWSessionRquestDataTypeGlanceData:
+            [self handleGlanceDataRequest:message replyHandler:replyHandler];
+            break;
         case AWSessionRquestDataTypeBalance:
             [self handleBalanceDataRequest:message replyHandler:replyHandler];
             break;
@@ -72,12 +78,7 @@
 
 #pragma mark - request handlers
 
-- (void)handleBalanceDataRequest:(NSDictionary*)request replyHandler:(void(^)(NSDictionary<NSString *, id> *replyMessage))replyHandler {
-    NSDictionary *replay = @{AW_SESSION_REQUEST_KEY: request,@"Balance":@"Balance"};
-    replyHandler(replay);
-}
-
-- (void)handleTransactionsDataRequest:(NSDictionary*)request replyHandler:(void(^)(NSDictionary<NSString *, id> *replyMessage))replyHandler {
+- (void)handleAllDataRequest:(NSDictionary*)request replyHandler:(void(^)(NSDictionary<NSString *, id> *replyMessage))replyHandler {
     BRWalletManager *manager = [BRWalletManager sharedInstance];
     NSArray *transactions = manager.wallet.recentTransactions;
     
@@ -86,8 +87,7 @@
     [transactionData addObject:[BRAppleWatchTransactionData appleWatchTransactionDataWithAmount:@"200" amountInlocalCurrency:@"201" date:@"10/11/2015"]];
     [transactionData addObject:[BRAppleWatchTransactionData appleWatchTransactionDataWithAmount:@"300" amountInlocalCurrency:@"301" date:@"10/12/2015"]];
     
-    UIImage *qrCodeImage = [UIImage imageWithQRCodeData:[BRPaymentRequest requestWithString:manager.wallet.receiveAddress].data size:CGSizeMake(160, 160)
-                                               color:[CIColor colorWithRed:0.0 green:0.0 blue:0.0]];
+    UIImage *qrCodeImage = self.qrCode;
     
     BRAppleWatchData *appleWatchData = [[BRAppleWatchData alloc] init];
     appleWatchData.balance = [manager stringForAmount:manager.wallet.balance];
@@ -95,8 +95,31 @@
     appleWatchData.receiveMoneyAddress = [BRWalletManager sharedInstance].wallet.receiveAddress;
     appleWatchData.transactions = [transactionData copy];
     appleWatchData.receiveMoneyQRCodeImage = qrCodeImage;
+    appleWatchData.hasWallet = !manager.noWallet;
     
     NSDictionary *replay = @{AW_SESSION_REQUEST_KEY: request, AW_SESSION_RESPONSE_KEY: [NSKeyedArchiver archivedDataWithRootObject:appleWatchData]};
+    
+    replyHandler(replay);
+}
+
+- (void)handleGlanceDataRequest:(NSDictionary*)request replyHandler:(void(^)(NSDictionary<NSString *, id> *replyMessage))replyHandler {
+    BRWalletManager *manager = [BRWalletManager sharedInstance];
+    BRAppleWatchData *appleWatchData = [[BRAppleWatchData alloc] init];
+    appleWatchData.balance = [manager stringForAmount:manager.wallet.balance];
+    appleWatchData.balanceInLocalCurrency = [manager localCurrencyStringForAmount:manager.wallet.balance];
+    appleWatchData.lastestTransction = @"receive ƀ102,000 ($10.00) 5 days ago";
+    appleWatchData.hasWallet = !manager.noWallet;
+    NSDictionary *replay = @{AW_SESSION_REQUEST_KEY: request, AW_SESSION_RESPONSE_KEY: [NSKeyedArchiver archivedDataWithRootObject:appleWatchData]};
+    replyHandler(replay);
+}
+
+- (void)handleBalanceDataRequest:(NSDictionary*)request replyHandler:(void(^)(NSDictionary<NSString *, id> *replyMessage))replyHandler {
+    NSDictionary *replay = @{AW_SESSION_REQUEST_KEY: request,@"Balance":@"Balance"};
+    replyHandler(replay);
+}
+
+- (void)handleTransactionsDataRequest:(NSDictionary*)request replyHandler:(void(^)(NSDictionary<NSString *, id> *replyMessage))replyHandler {
+    NSDictionary *replay = @{AW_SESSION_REQUEST_KEY: request,@"Transaction":@"Transaction"};
     replyHandler(replay);
 }
 
@@ -104,6 +127,12 @@
 - (void)handleReceiveMoneyQRRequest:(NSDictionary*)request replyHandler:(void(^)(NSDictionary<NSString *, id> *replyMessage))replyHandler {
     NSDictionary *replay = @{AW_SESSION_REQUEST_KEY: request,@"ReceiveMoneyQR":@"ReceiveMoneyQR"};
     replyHandler(replay);
+}
+
+- (UIImage*)qrCode {
+    BRWalletManager *manager = [BRWalletManager sharedInstance];
+    return [UIImage imageWithQRCodeData:[BRPaymentRequest requestWithString:manager.wallet.receiveAddress].data size:CGSizeMake(150, 150)
+                           color:[CIColor colorWithRed:0.0 green:0.0 blue:0.0]];
 }
 
 #pragma mark - data helper methods

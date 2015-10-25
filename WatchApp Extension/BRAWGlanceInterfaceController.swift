@@ -29,34 +29,64 @@ class BRAWGlanceInterfaceController: WKInterfaceController {
     
     @IBOutlet var setupWalletContainer: WKInterfaceGroup!
     @IBOutlet var balanceAmountLabel: WKInterfaceLabel!
+    @IBOutlet var balanceInLocalCurrencyLabel: WKInterfaceLabel!
+    @IBOutlet var lastTransactionLabel: WKInterfaceLabel!
     @IBOutlet var balanceInfoContainer: WKInterfaceGroup!
+    @IBOutlet var loadingIndicator: WKInterfaceGroup!
+    @IBOutlet var cannotConnectIPhoneMessageContainer: WKInterfaceGroup!
     override func awakeWithContext(context: AnyObject?) {
         super.awakeWithContext(context)
-        self.balanceAmountLabel.setAttributedText(attributedString())
         // Configure interface objects here.
-        balanceInfoContainer.setHidden(shouldShowSetupWalletInterface())
-        setupWalletContainer.setHidden(!shouldShowSetupWalletInterface())
+        updateUI()
     }
     
     override func willActivate() {
         // This method is called when watch view controller is about to be visible to user
         super.willActivate()
+        updateUI()
+        BRAWWatchDataManager.sharedInstance.requestGalanceData()
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "updateUI", name: BRAWWatchDataManager.GalanceDataDidUpdateNotification, object: nil)
     }
     
     override func didDeactivate() {
         // This method is called when watch view controller is no longer visible
         super.didDeactivate()
+        NSNotificationCenter.defaultCenter().removeObserver(self)
     }
     
-    func attributedString()-> NSAttributedString {
-        let attributedString = NSMutableAttributedString()
-        attributedString.appendAttributedString(NSAttributedString(string: "ƀ", attributes: [NSForegroundColorAttributeName : UIColor.grayColor()]))
-        attributedString.appendAttributedString(NSAttributedString(string: "1,000,000", attributes: [NSForegroundColorAttributeName : UIColor.whiteColor()]))
-        return attributedString
+    func updateUI() {
+        updateContainerVisibility()
+        balanceAmountLabel.setAttributedText(BRAWWatchDataManager.sharedInstance.balanceAttributedString())
+        balanceInLocalCurrencyLabel.setText(BRAWWatchDataManager.sharedInstance.balanceInLocalCurrency)
+        lastTransactionLabel.setText(BRAWWatchDataManager.sharedInstance.lastestTransction)
     }
     
     func shouldShowSetupWalletInterface()->Bool {
         return false;
     }
     
+    func updateContainerVisibility() {
+        switch BRAWWatchDataManager.sharedInstance.walletStatus {
+        case .Unknown:
+            loadingIndicator.setHidden(false)
+            balanceInfoContainer.setHidden(true)
+            setupWalletContainer.setHidden(true)
+            cannotConnectIPhoneMessageContainer.setHidden(true)
+        case .NotSetup:
+            loadingIndicator.setHidden(true)
+            balanceInfoContainer.setHidden(true)
+            cannotConnectIPhoneMessageContainer.setHidden(true)
+            setupWalletContainer.setHidden(false)
+        case .HasSetup:
+            loadingIndicator.setHidden(true)
+            balanceInfoContainer.setHidden(false)
+            setupWalletContainer.setHidden(true)
+            cannotConnectIPhoneMessageContainer.setHidden(true)
+        case .CannotConnectToPhone:
+            loadingIndicator.setHidden(true)
+            balanceInfoContainer.setHidden(true)
+            setupWalletContainer.setHidden(true)
+            cannotConnectIPhoneMessageContainer.setHidden(false)
+        }
+    }
 }

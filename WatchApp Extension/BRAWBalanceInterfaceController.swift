@@ -71,10 +71,10 @@ class BRAWBalanceInterfaceController: WKInterfaceController {
     // MARK: UI update
     
     func updateBalance() {
-        if let balanceInLocalizationString = BRAWWatchDataManager.sharedInstance.balanceInLocalCurrency as String?, let originalBalanceString = BRAWWatchDataManager.sharedInstance.balance as? String {
-            var balanceString = originalBalanceString.stringByReplacingOccurrencesOfString("ƀ"   , withString: "")
-            balanceString = balanceString.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
-            balanceLabel.setAttributedText(attributedStringForBalance(balanceString))
+        if let balanceInLocalizationString = BRAWWatchDataManager.sharedInstance.balanceInLocalCurrency as String? {
+            if (BRAWWatchDataManager.sharedInstance.balanceAttributedString() != nil){
+                balanceLabel.setAttributedText(BRAWWatchDataManager.sharedInstance.balanceAttributedString())
+            }
             balanceInLocalCurrencyLabel.setText(balanceInLocalizationString)
             showBalanceLoadingIndicator = false;
         } else {
@@ -110,13 +110,4 @@ class BRAWBalanceInterfaceController: WKInterfaceController {
         rowControl.seperatorGroup.setHeight(0.5)
     }
     
-    // MARK: Helper methods
-    
-    func attributedStringForBalance(balance: String?)-> NSAttributedString {
-        let attributedString = NSMutableAttributedString()
-        attributedString.appendAttributedString(NSAttributedString(string: "ƀ", attributes: [NSForegroundColorAttributeName : UIColor.grayColor()]))
-        attributedString.appendAttributedString(NSAttributedString(string: balance ?? "0", attributes: [NSForegroundColorAttributeName : UIColor.whiteColor()]))
-        return attributedString
-    }
-
 }
