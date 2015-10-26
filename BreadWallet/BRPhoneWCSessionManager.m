@@ -49,38 +49,33 @@
     if ( self = [super init]){
         [WCSession defaultSession].delegate = self;
         [[WCSession defaultSession] activateSession];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(sendDataUpdateNotificationToWatch) name:BRWalletBalanceChangedNotification object:nil];
     }
     return self;
 }
 
 #pragma mark - WKSession delegate
 - (void)session:(WCSession *)session didReceiveMessage:(NSDictionary<NSString *, id> *)message replyHandler:(void(^)(NSDictionary<NSString *, id> *replyMessage))replyHandler {
-    switch ([message[AW_SESSION_REQUEST_DATA_TYPE_KEY] integerValue]) {
-        case AWSessionRquestDataTypeAllData:
-            [self handleAllDataRequest:message replyHandler:replyHandler];
-            break;
-        case AWSessionRquestDataTypeGlanceData:
-            [self handleGlanceDataRequest:message replyHandler:replyHandler];
-            break;
-        default:
-            replyHandler(@{});
+    if ([message[AW_SESSION_REQUEST_TYPE] integerValue] == AWSessionRquestTypeFetchData) {
+        switch ([message[AW_SESSION_REQUEST_DATA_TYPE_KEY] integerValue]) {
+            case AWSessionRquestDataTypeAllData:
+                [self handleAllDataRequest:message replyHandler:replyHandler];
+                break;
+            case AWSessionRquestDataTypeGlanceData:
+                [self handleGlanceDataRequest:message replyHandler:replyHandler];
+                break;
+            default:
+                replyHandler(@{});
+        }
+    } else {
+        replyHandler(@{});
     }
 }
 
 #pragma mark - request handlers
 
 - (void)handleAllDataRequest:(NSDictionary*)request replyHandler:(void(^)(NSDictionary<NSString *, id> *replyMessage))replyHandler {
-    BRWalletManager *manager = [BRWalletManager sharedInstance];
-    NSArray *transactions = manager.wallet.recentTransactions;
-    UIImage *qrCodeImage = self.qrCode;
-    BRAppleWatchData *appleWatchData = [[BRAppleWatchData alloc] init];
-    appleWatchData.balance = [manager stringForAmount:manager.wallet.balance];
-    appleWatchData.balanceInLocalCurrency = [manager localCurrencyStringForAmount:manager.wallet.balance];
-    appleWatchData.receiveMoneyAddress = [BRWalletManager sharedInstance].wallet.receiveAddress;
-    appleWatchData.transactions = [[self recentTransactionListFromTransactions:transactions] copy];
-    appleWatchData.receiveMoneyQRCodeImage = qrCodeImage;
-    appleWatchData.hasWallet = !manager.noWallet;
-    NSDictionary *replay = @{AW_SESSION_REQUEST_KEY: request, AW_SESSION_RESPONSE_KEY: [NSKeyedArchiver archivedDataWithRootObject:appleWatchData]};
+    NSDictionary *replay = @{AW_SESSION_RESPONSE_KEY: [NSKeyedArchiver archivedDataWithRootObject:[self appleWatchAppData]]};
     replyHandler(replay);
 }
 
@@ -92,8 +87,26 @@
     //TODO get latest transaction formatting
     appleWatchData.lastestTransction = @"receive ƀ102,000 ($10.00) 5 days ago";
     appleWatchData.hasWallet = !manager.noWallet;
-    NSDictionary *replay = @{AW_SESSION_REQUEST_KEY: request, AW_SESSION_RESPONSE_KEY: [NSKeyedArchiver archivedDataWithRootObject:appleWatchData]};
+    NSDictionary *replay = @{AW_SESSION_RESPONSE_KEY: [NSKeyedArchiver archivedDataWithRootObject:appleWatchData]};
     replyHandler(replay);
+}
+
+- (void)sendDataUpdateNotificationToWatch {
+    [[WCSession defaultSession] sendMessage:@{AW_SESSION_RESPONSE_KEY:@(AWSessionRquestTypeDataUpdateNotification)}  replyHandler:nil errorHandler:nil];
+}
+
+- (BRAppleWatchData*)appleWatchAppData {
+    BRWalletManager *manager = [BRWalletManager sharedInstance];
+    NSArray *transactions = manager.wallet.recentTransactions;
+    UIImage *qrCodeImage = self.qrCode;
+    BRAppleWatchData *appleWatchData = [[BRAppleWatchData alloc] init];
+    appleWatchData.balance = [manager stringForAmount:manager.wallet.balance];
+    appleWatchData.balanceInLocalCurrency = [manager localCurrencyStringForAmount:manager.wallet.balance];
+    appleWatchData.receiveMoneyAddress = [BRWalletManager sharedInstance].wallet.receiveAddress;
+    appleWatchData.transactions = [[self recentTransactionListFromTransactions:transactions] copy];
+    appleWatchData.receiveMoneyQRCodeImage = qrCodeImage;
+    appleWatchData.hasWallet = !manager.noWallet;
+    return appleWatchData;
 }
 
 - (UIImage*)qrCode {

@@ -39,7 +39,8 @@ class BRAWWatchDataManager: NSObject, WCSessionDelegate {
     }
     
     func requestGalanceData() {
-        let messageToSend = [AW_SESSION_REQUEST_DATA_TYPE_KEY:NSNumber(unsignedInt:AWSessionRquestDataTypeGlanceData.rawValue)]
+        let messageToSend = [AW_SESSION_REQUEST_TYPE: NSNumber(unsignedInt:AWSessionRquestTypeFetchData.rawValue),
+            AW_SESSION_REQUEST_DATA_TYPE_KEY: NSNumber(unsignedInt:AWSessionRquestDataTypeGlanceData.rawValue)]
         WCSession.defaultSession().sendMessage(messageToSend, replyHandler: { [unowned self] replyMessage in
                 print("\(replyMessage)")
                 if let data = replyMessage[AW_SESSION_RESPONSE_KEY] as? NSData {
@@ -68,7 +69,8 @@ class BRAWWatchDataManager: NSObject, WCSessionDelegate {
     }
 
     func requestAllData() {
-        let messageToSend = [AW_SESSION_REQUEST_DATA_TYPE_KEY:NSNumber(unsignedInt:AWSessionRquestDataTypeAllData.rawValue)]
+        let messageToSend = [AW_SESSION_REQUEST_TYPE: NSNumber(unsignedInt:AWSessionRquestTypeFetchData.rawValue),
+            AW_SESSION_REQUEST_DATA_TYPE_KEY:NSNumber(unsignedInt:AWSessionRquestDataTypeAllData.rawValue)]
         WCSession.defaultSession().sendMessage(messageToSend, replyHandler: { [unowned self] replyMessage in
             //handle and present the message on screen
                 print("\(replyMessage)")

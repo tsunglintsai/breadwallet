@@ -26,7 +26,7 @@
 #import "BRAppleWatchData.h"
 
 #define AW_SESSION_RESPONSE_KEY    @"AW_SESSION_RESPONSE_KEY"
-#define AW_SESSION_REQUEST_KEY     @"AW_SESSION_REQUEST_KEY"
+#define AW_SESSION_REQUEST_TYPE     @"AW_SESSION_REQUEST_TYPE"
 
 #define AW_SESSION_REQUEST_DATA_TYPE_KEY        @"AW_SESSION_REQUEST_DATA_TYPE_KEY"
 
@@ -35,4 +35,8 @@ typedef enum {
     AWSessionRquestDataTypeGlanceData,
 } AWSessionRquestDataType;
 
+typedef enum {
+    AWSessionRquestTypeDataUpdateNotification,
+    AWSessionRquestTypeFetchData,
+} AWSessionRquestType;
 
