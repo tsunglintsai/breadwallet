@@ -26,7 +26,7 @@
     }
 }
 
-- (NSString*)localCurrencyStringForAmount {
+- (NSString*)localCurrencyTextForAmount {
     BRWalletManager *manager = [BRWalletManager sharedInstance];
     uint64_t received = [manager.wallet amountReceivedFromTransaction:self],
     sent = [manager.wallet amountSentByTransaction:self];
@@ -44,7 +44,7 @@
     }
 }
 
-- (NSString*)amount {
+- (NSString*)amountText {
     BRWalletManager *manager = [BRWalletManager sharedInstance];
     uint64_t received = [manager.wallet amountReceivedFromTransaction:self],
     sent = [manager.wallet amountSentByTransaction:self];
@@ -59,7 +59,7 @@
     }
 }
 
-- (NSString*)date {
+- (NSString*)dateText {
     // TODO : is there any way to move formatting from BRTxHistoryViewController to here.
     NSDateFormatter *df = [[NSDateFormatter alloc] init];
     df.dateStyle = NSDateFormatterMediumStyle;

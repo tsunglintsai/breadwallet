@@ -118,16 +118,16 @@ class BRAWWatchDataManager: NSObject, WCSessionDelegate {
     
     func simulateAddTransactions() {
         let transactionData = BRAppleWatchTransactionData()
-        transactionData.amount = "amount"
-        transactionData.amountInLocalCurrency = "amount in local"
-        transactionData.date = NSDate().description
+        transactionData.amountText = "amount"
+        transactionData.amountTextInLocalCurrency = "amount in local"
+        transactionData.dateText = NSDate().description
         transactionHistory.insert(transactionData, atIndex: transactionHistory.count)
         NSNotificationCenter.defaultCenter().postNotificationName(BRAWWatchDataManager.TransactionDidUpdateNotification, object: nil)
     }
     
     func balanceAttributedString() -> NSAttributedString? {
        if let originalBalanceString = BRAWWatchDataManager.sharedInstance.balance {
-            var balanceString = originalBalanceString.stringByReplacingOccurrencesOfString("ƀ"   , withString: "")
+            var balanceString = originalBalanceString.stringByReplacingOccurrencesOfString("ƀ", withString: "")
             balanceString = balanceString.stringByTrimmingCharactersInSet(NSCharacterSet.whitespaceCharacterSet())
             return attributedStringForBalance(balanceString)
         }

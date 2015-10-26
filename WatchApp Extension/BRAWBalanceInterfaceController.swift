@@ -103,9 +103,9 @@ class BRAWBalanceInterfaceController: WKInterfaceController {
     }
     
     func updateRow(rowControl: BRAWTransactionRowControl, transaction: BRAppleWatchTransactionData) {
-        rowControl.amountLabel.setText(transaction.amount)
-        rowControl.localCurrencyAmount.setText(transaction.amountInLocalCurrency)
-        rowControl.dateLabel.setText(transaction.date)
+        rowControl.amountLabel.setText(transaction.amountText)
+        rowControl.localCurrencyAmount.setText(transaction.amountTextInLocalCurrency)
+        rowControl.dateLabel.setText(transaction.dateText)
         rowControl.isSendMoney = true
         rowControl.seperatorGroup.setHeight(0.5)
     }

@@ -15,7 +15,7 @@ typedef enum : NSInteger {
 } BRAWTransactionType;
 
 @interface BRAppleWatchTransactionData : NSObject<NSCoding>
-@property (nonatomic, strong) NSString *amount;
-@property (nonatomic, strong) NSString *amountInLocalCurrency;
-@property (nonatomic, strong) NSString *date;
+@property (nonatomic, strong) NSString *amountText;
+@property (nonatomic, strong) NSString *amountTextInLocalCurrency;
+@property (nonatomic, strong) NSString *dateText;
 @end

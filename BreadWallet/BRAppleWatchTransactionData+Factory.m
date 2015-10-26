@@ -14,9 +14,9 @@
     BRAppleWatchTransactionData *appleWatchTransactionData;
     if (transaction) {
         appleWatchTransactionData = [[BRAppleWatchTransactionData alloc] init];
-        appleWatchTransactionData.amount = transaction.amount;
-        appleWatchTransactionData.amountInLocalCurrency = transaction.localCurrencyStringForAmount;
-        appleWatchTransactionData.date = transaction.date;
+        appleWatchTransactionData.amountText = transaction.amountText;
+        appleWatchTransactionData.amountTextInLocalCurrency = transaction.localCurrencyTextForAmount;
+        appleWatchTransactionData.dateText = transaction.dateText;
     }
     return appleWatchTransactionData;
 }
@@ -26,9 +26,9 @@
                                                date:(NSString*)date {
     BRAppleWatchTransactionData *appleWatchTransactionData;
     appleWatchTransactionData = [[BRAppleWatchTransactionData alloc] init];
-    appleWatchTransactionData.amount = amount;
-    appleWatchTransactionData.amountInLocalCurrency = amountInlocalCurrency;
-    appleWatchTransactionData.date = date;
+    appleWatchTransactionData.amountText = amount;
+    appleWatchTransactionData.amountTextInLocalCurrency = amountInlocalCurrency;
+    appleWatchTransactionData.dateText = date;
     return appleWatchTransactionData;
 }
 @end

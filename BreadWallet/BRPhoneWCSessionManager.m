@@ -121,9 +121,9 @@
     BOOL useMockData = true;
     NSMutableArray *transactionListData = [[NSMutableArray alloc] init];
     if (useMockData) {
-        [transactionListData addObject:[BRAppleWatchTransactionData appleWatchTransactionDataWithAmount:@"ƀ100" amountInlocalCurrency:@"$1.01" date:@"10/10/2015"]];
-        [transactionListData addObject:[BRAppleWatchTransactionData appleWatchTransactionDataWithAmount:@"ƀ200" amountInlocalCurrency:@"$1.02" date:@"10/11/2015"]];
-        [transactionListData addObject:[BRAppleWatchTransactionData appleWatchTransactionDataWithAmount:@"ƀ300" amountInlocalCurrency:@"$1.03" date:@"10/12/2015"]];
+        [transactionListData addObject:[BRAppleWatchTransactionData appleWatchTransactionDataWithAmount:@"ƀ100" amountInlocalCurrency:@"$0.01" date:@"10/10/2015"]];
+        [transactionListData addObject:[BRAppleWatchTransactionData appleWatchTransactionDataWithAmount:@"ƀ200" amountInlocalCurrency:@"$0.02" date:@"10/11/2015"]];
+        [transactionListData addObject:[BRAppleWatchTransactionData appleWatchTransactionDataWithAmount:@"ƀ300" amountInlocalCurrency:@"$0.03" date:@"10/12/2015"]];
     } else {
         for ( BRTransaction *transaction in transactions) {
             [transactionListData addObject:[BRAppleWatchTransactionData appleWatchTransactionDataFrom:transaction]];
