@@ -106,7 +106,7 @@ class BRAWBalanceInterfaceController: WKInterfaceController {
         rowControl.amountLabel.setText(transaction.amountText)
         rowControl.localCurrencyAmount.setText(transaction.amountTextInLocalCurrency)
         rowControl.dateLabel.setText(transaction.dateText)
-        rowControl.isSendMoney = true
+        rowControl.type = transaction.type
         rowControl.seperatorGroup.setHeight(0.5)
     }
     

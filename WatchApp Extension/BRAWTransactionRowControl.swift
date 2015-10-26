@@ -27,18 +27,30 @@ import WatchKit
 
 class BRAWTransactionRowControl: NSObject {
     
-    @IBOutlet var sendIcon: WKInterfaceImage!
-    @IBOutlet var receiveIcon: WKInterfaceImage!
+    @IBOutlet var statusIcon: WKInterfaceImage!
     @IBOutlet var amountLabel: WKInterfaceLabel!
     @IBOutlet var dateLabel: WKInterfaceLabel!
     @IBOutlet var seperatorGroup: WKInterfaceGroup!
     @IBOutlet var localCurrencyAmount: WKInterfaceLabel!
-    
-    var isSendMoney = false {
+    var type = BRAWTransactionTypeReceive {
         didSet {
-            self.sendIcon.setHidden(!isSendMoney)
-            self.receiveIcon.setHidden(isSendMoney)
+            switch type {
+                case BRAWTransactionTypeReceive:
+                    statusIcon.setImageNamed("ReceiveMoneyIcon")
+                    break;
+                case BRAWTransactionTypeSent:
+                    statusIcon.setImageNamed("SentMoneyIcon")
+                    break;
+                case BRAWTransactionTypeMove:
+                    statusIcon.setImageNamed("MoveMoneyIcon")
+                    break;
+                case BRAWTransactionTypeInvalid:
+                    statusIcon.setImageNamed("InvalidTransactionIcon")
+                    break;
+                default:
+                    statusIcon.setImageNamed("ReceiveMoneyIcon")
+                    // do nothing
+            }
         }
     }
-    
 }

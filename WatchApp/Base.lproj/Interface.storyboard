@@ -141,9 +141,8 @@
                                                 <items>
                                                     <group width="0.45000000000000001" height="1" alignment="left" verticalAlignment="center" layout="vertical" id="vGv-qG-pgn" userLabel="Left info container">
                                                         <items>
-                                                            <imageView width="30" height="20" alignment="left" image="SentMoneyIcon" contentMode="scaleAspectFill" id="ITw-RF-K7K"/>
-                                                            <imageView width="30" height="20" alignment="left" hidden="YES" image="ReceiveMoneyIcon" contentMode="scaleAspectFill" id="qRI-Ft-1cs" userLabel="Receive Icon"/>
-                                                            <label alignment="left" verticalAlignment="bottom" text="10/12/05" minimumScaleFactor="0.80000000000000004" id="ldT-a1-2YZ">
+                                                            <imageView width="30" height="20" alignment="left" image="SentMoneyIcon" contentMode="scaleAspectFill" id="ITw-RF-K7K" userLabel="Status icon"/>
+                                                            <label alignment="left" verticalAlignment="bottom" text="10/12/05" minimumScaleFactor="0.80000000000000004" id="ldT-a1-2YZ" userLabel="Date label">
                                                                 <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                                                 <fontDescription key="font" type="system" pointSize="12"/>
                                                             </label>
@@ -151,10 +150,10 @@
                                                     </group>
                                                     <group width="0.55000000000000004" height="1" alignment="right" verticalAlignment="center" layout="vertical" id="Kwi-43-bNF" userLabel="right info container">
                                                         <items>
-                                                            <label alignment="right" text="ƀ14,659" minimumScaleFactor="0.5" id="gCK-ru-Um6">
+                                                            <label alignment="right" text="ƀ14,659" minimumScaleFactor="0.5" id="gCK-ru-Um6" userLabel="Amount label">
                                                                 <fontDescription key="font" type="system" pointSize="14"/>
                                                             </label>
-                                                            <label alignment="right" verticalAlignment="bottom" text="$4.00" id="WXm-0a-dhD">
+                                                            <label alignment="right" verticalAlignment="bottom" text="$4.00" id="WXm-0a-dhD" userLabel="Local currency amount">
                                                                 <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                                                 <fontDescription key="font" type="system" pointSize="12"/>
                                                             </label>
@@ -173,9 +172,8 @@
                                         <outlet property="amountLabel" destination="gCK-ru-Um6" id="G84-TP-j9h"/>
                                         <outlet property="dateLabel" destination="ldT-a1-2YZ" id="Eue-Gd-hdE"/>
                                         <outlet property="localCurrencyAmount" destination="WXm-0a-dhD" id="fDh-HR-FFS"/>
-                                        <outlet property="receiveIcon" destination="qRI-Ft-1cs" id="ieK-rd-HHG"/>
-                                        <outlet property="sendIcon" destination="ITw-RF-K7K" id="W9M-Mf-zha"/>
                                         <outlet property="seperatorGroup" destination="Njc-ne-SVi" id="MjG-MM-zgG"/>
+                                        <outlet property="statusIcon" destination="ITw-RF-K7K" id="fTh-u4-fmv"/>
                                     </connections>
                                 </tableRow>
                             </items>
