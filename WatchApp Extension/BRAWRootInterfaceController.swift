@@ -26,31 +26,50 @@
 import WatchKit
 
 class BRAWRootInterfaceController: WKInterfaceController {
+    @IBOutlet var setupWalletMessageLabel: WKInterfaceLabel! {
+        didSet{
+            setupWalletMessageLabel.setHidden(true)
+        }
+    }
+    @IBOutlet var connectionLostMessageLabel: WKInterfaceLabel!{
+        didSet{
+            connectionLostMessageLabel.setHidden(true)
+        }
+    }
+    @IBOutlet var loadingIndicator: WKInterfaceGroup!
 
     override func awakeWithContext(context: AnyObject?) {
         super.awakeWithContext(context)
-        
-        // Configure interface objects here.
     }
 
     override func willActivate() {
         // This method is called when watch view controller is about to be visible to user
         super.willActivate()
-        if shouldShowSetupWalletInterface() {
-            WKInterfaceController.reloadRootControllersWithNames(["BRAWSetupWalletInterfaceController"], contexts: [])
-        } else {
-            WKInterfaceController.reloadRootControllersWithNames(["BRAWBalanceInterfaceController","BRAWReceiveMoneyInterfaceController"], contexts: [])
-        }
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "walletStatusDidChange", name: BRAWWatchDataManager.WalletStatusDidChangeNotification, object: nil)
     }
 
     override func didDeactivate() {
         // This method is called when watch view controller is no longer visible
         super.didDeactivate()
+        NSNotificationCenter.defaultCenter().removeObserver(self)
     }
     
-    func shouldShowSetupWalletInterface()->Bool {
-        return false;
+    func walletStatusDidChange() {
+        switch BRAWWatchDataManager.sharedInstance.walletStatus {
+        case .Unknown:
+            loadingIndicator.setHidden(false)
+            setupWalletMessageLabel.setHidden(true)
+            connectionLostMessageLabel.setHidden(true)
+        case .NotSetup:
+            loadingIndicator.setHidden(true)
+            setupWalletMessageLabel.setHidden(false)
+            connectionLostMessageLabel.setHidden(true)
+        case .HasSetup:
+            WKInterfaceController.reloadRootControllersWithNames(["BRAWBalanceInterfaceController","BRAWReceiveMoneyInterfaceController"], contexts: [])
+        case .CannotConnectToPhone:
+            loadingIndicator.setHidden(true)
+            setupWalletMessageLabel.setHidden(true)
+            connectionLostMessageLabel.setHidden(false)
+        }
     }
-    
-
 }

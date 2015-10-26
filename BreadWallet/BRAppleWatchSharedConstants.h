@@ -33,9 +33,6 @@
 typedef enum {
     AWSessionRquestDataTypeAllData,
     AWSessionRquestDataTypeGlanceData,
-    AWSessionRquestDataTypeBalance,
-    AWSessionRquestDataTypeTransactions,
-    AWSessionRquestDataTypeReceiveMoneyQR,
 } AWSessionRquestDataType;
 
 

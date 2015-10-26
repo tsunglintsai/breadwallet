@@ -5,23 +5,23 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBWatchKitPlugin" version="9019"/>
     </dependencies>
     <scenes>
-        <!--Root Interface Controller-->
+        <!--ƀreadwallet-->
         <scene sceneID="aou-V4-d1y">
             <objects>
-                <controller id="AgC-eL-Hgc" customClass="BRAWRootInterfaceController" customModule="WatchApp_Extension"/>
-            </objects>
-            <point key="canvasLocation" x="164" y="217"/>
-        </scene>
-        <!--BreadWallet-->
-        <scene sceneID="3tD-dX-RQ8">
-            <objects>
-                <controller identifier="BRAWSetupWalletInterfaceController" title="BreadWallet" hidesWhenLoading="NO" id="Qm0-UG-3gN" customClass="BRAWSetupWalletInterfaceController" customModule="WatchApp_Extension">
+                <controller title="ƀreadwallet" id="AgC-eL-Hgc" customClass="BRAWRootInterfaceController" customModule="WatchApp_Extension">
                     <items>
-                        <label alignment="center" verticalAlignment="center" text="Open Breadwallet iPhone app to setup your wallet" textAlignment="left" numberOfLines="0" id="L9O-8D-a8K"/>
+                        <group width="30" height="30" alignment="center" verticalAlignment="center" backgroundImage="LoadingIndicator" id="wKY-qb-B8a" userLabel="Loading indicator"/>
+                        <label alignment="center" verticalAlignment="center" text="Open Breadwallet iPhone app to setup your wallet" textAlignment="left" numberOfLines="0" id="VXj-KF-nqM"/>
+                        <label alignment="center" verticalAlignment="center" text="Connection to iPhone is lost. Please try again later" textAlignment="left" numberOfLines="0" id="4GK-B1-ZWa"/>
                     </items>
+                    <connections>
+                        <outlet property="connectionLostMessageLabel" destination="4GK-B1-ZWa" id="gvq-ej-AmZ"/>
+                        <outlet property="loadingIndicator" destination="wKY-qb-B8a" id="38C-SN-66a"/>
+                        <outlet property="setupWalletMessageLabel" destination="VXj-KF-nqM" id="Tnv-ma-LAe"/>
+                    </connections>
                 </controller>
             </objects>
-            <point key="canvasLocation" x="369" y="217"/>
+            <point key="canvasLocation" x="164" y="217"/>
         </scene>
         <!--BRAWGlanceInterfaceController-->
         <scene sceneID="rjY-Ar-IMT">
@@ -81,7 +81,7 @@
                     </connections>
                 </glanceController>
             </objects>
-            <point key="canvasLocation" x="164" y="514"/>
+            <point key="canvasLocation" x="164" y="926"/>
         </scene>
         <!--Balance-->
         <scene sceneID="1F7-ti-8Wn">
@@ -143,7 +143,7 @@
                                                         <items>
                                                             <imageView width="30" height="20" alignment="left" image="SentMoneyIcon" contentMode="scaleAspectFill" id="ITw-RF-K7K"/>
                                                             <imageView width="30" height="20" alignment="left" hidden="YES" image="ReceiveMoneyIcon" contentMode="scaleAspectFill" id="qRI-Ft-1cs" userLabel="Receive Icon"/>
-                                                            <label alignment="left" verticalAlignment="bottom" text="10/12/05" id="ldT-a1-2YZ">
+                                                            <label alignment="left" verticalAlignment="bottom" text="10/12/05" minimumScaleFactor="0.80000000000000004" id="ldT-a1-2YZ">
                                                                 <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                                                 <fontDescription key="font" type="system" pointSize="12"/>
                                                             </label>
@@ -192,7 +192,7 @@
                     </connections>
                 </controller>
             </objects>
-            <point key="canvasLocation" x="376" y="562.5"/>
+            <point key="canvasLocation" x="164" y="563"/>
         </scene>
         <!--Receive Money-->
         <scene sceneID="wCU-y0-cjL">
@@ -217,7 +217,7 @@
                     </connections>
                 </controller>
             </objects>
-            <point key="canvasLocation" x="641" y="563"/>
+            <point key="canvasLocation" x="369" y="562.5"/>
         </scene>
     </scenes>
 </document>
