@@ -44,14 +44,15 @@ class BRAWGlanceInterfaceController: WKInterfaceController {
         // This method is called when watch view controller is about to be visible to user
         super.willActivate()
         updateUI()
-        BRAWWatchDataManager.sharedInstance.requestGalanceData()
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "updateUI", name: BRAWWatchDataManager.GalanceDataDidUpdateNotification, object: nil)
+        // disable due to bug https://forums.developer.apple.com/thread/14740
+//        BRAWWatchDataManager.sharedInstance.requestGalanceData()
+//        NSNotificationCenter.defaultCenter().addObserver(self, selector: "updateUI", name: BRAWWatchDataManager.GalanceDataDidUpdateNotification, object: nil)
     }
     
     override func didDeactivate() {
         // This method is called when watch view controller is no longer visible
         super.didDeactivate()
-        NSNotificationCenter.defaultCenter().removeObserver(self)
+//        NSNotificationCenter.defaultCenter().removeObserver(self)
     }
     
     func updateUI() {
