@@ -92,7 +92,7 @@
 }
 
 - (void)sendDataUpdateNotificationToWatch {
-    [[WCSession defaultSession] sendMessage:@{AW_SESSION_RESPONSE_KEY:@(AWSessionRquestTypeDataUpdateNotification)}  replyHandler:nil errorHandler:nil];
+    [[WCSession defaultSession] sendMessage:@{AW_SESSION_REQUEST_TYPE:@(AWSessionRquestTypeDataUpdateNotification)}  replyHandler:nil errorHandler:nil];
 }
 
 - (BRAppleWatchData*)appleWatchAppData {
