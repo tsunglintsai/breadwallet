@@ -102,6 +102,14 @@ class BRAWWatchDataManager: NSObject, WCSessionDelegate {
         })
     }
     
+    func session(session: WCSession, didReceiveMessage message: [String : AnyObject]) {
+        if let requestType = message[AW_SESSION_REQUEST_TYPE] as? NSNumber {
+            if requestType.unsignedIntValue == AWSessionRquestTypeDataUpdateNotification.rawValue {
+                requestAllData()
+            }
+        }
+    }
+    
     func simulateRemoveTransactions() {
         transactionHistory.removeLast()
         NSNotificationCenter.defaultCenter().postNotificationName(BRAWWatchDataManager.TransactionDidUpdateNotification, object: nil)
