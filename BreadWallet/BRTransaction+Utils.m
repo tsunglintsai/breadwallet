@@ -8,12 +8,18 @@
 
 #import "BRTransaction+Utils.h"
 #import "BRWalletManager.h"
+#import "BRPeerManager.h"
 
 @implementation BRTransaction (Utils)
 - (BRTransactionType)transactionType {
     BRWalletManager *manager = [BRWalletManager sharedInstance];
     uint64_t received = [manager.wallet amountReceivedFromTransaction:self],
     sent = [manager.wallet amountSentByTransaction:self];
+    uint32_t blockHeight = self.blockHeight;
+    uint32_t confirms = ([self blockHeight] > blockHeight) ? 0 : (blockHeight - [self blockHeight]) + 1;
+    if (confirms == 0 && ! [manager.wallet transactionIsValid:self]) {
+        return BRTransactionTypeInvalid;
+    }
     
     if (sent > 0 && received == sent) {
         return BRTransactionTypeMove;
@@ -59,10 +65,25 @@
     }
 }
 
+- (uint32_t)blockHeight {
+    static uint32_t height = 0;
+    uint32_t h = [BRPeerManager sharedInstance].lastBlockHeight;
+    if (h > height) height = h;
+    return height;
+}
+
 - (NSString*)dateText {
     // TODO : is there any way to move formatting from BRTxHistoryViewController to here.
     NSDateFormatter *df = [[NSDateFormatter alloc] init];
     df.dateStyle = NSDateFormatterMediumStyle;
-    return [NSString stringWithFormat:@"%@", [df stringFromDate:[NSDate date]]];
+    
+    NSTimeInterval t = (self.timestamp > 1) ? self.timestamp :
+    [[BRPeerManager sharedInstance] timestampForBlockHeight:self.blockHeight] - 5*60;
+    
+    return [[[df stringFromDate:[NSDate dateWithTimeIntervalSinceReferenceDate:t]].lowercaseString
+             stringByReplacingOccurrencesOfString:@"am" withString:@"a"]
+            stringByReplacingOccurrencesOfString:@"pm" withString:@"p"];
+    
+    
 }
 @end

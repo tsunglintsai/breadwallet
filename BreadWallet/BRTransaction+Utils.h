@@ -12,6 +12,7 @@ typedef enum : NSInteger {
     BRTransactionTypeSent,
     BRTransactionTypeReceive,
     BRTransactionTypeMove,
+    BRTransactionTypeInvalid
 } BRTransactionType;
 
 @interface BRTransaction (Utils)
