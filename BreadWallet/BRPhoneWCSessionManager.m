@@ -32,6 +32,7 @@
 #import "BRAppleWatchTransactionData+Factory.h"
 
 @interface BRPhoneWCSessionManager()<WCSessionDelegate>
+@property WCSession *session;
 @end
 
 @implementation BRPhoneWCSessionManager
@@ -46,10 +47,14 @@
 }
 
 - (instancetype)init {
-    if ( self = [super init]){
-        [WCSession defaultSession].delegate = self;
-        [[WCSession defaultSession] activateSession];
-        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(sendDataUpdateNotificationToWatch) name:BRWalletBalanceChangedNotification object:nil];
+    if (self = [super init]) {
+        // prevent pre watchOS iOS access the feature
+        if ([WCSession class] && [WCSession isSupported]) {
+            self.session = [WCSession defaultSession];
+            self.session.delegate = self;
+            [self.session activateSession];
+            [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(sendDataUpdateNotificationToWatch) name:BRWalletBalanceChangedNotification object:nil];
+        }
     }
     return self;
 }
@@ -92,7 +97,7 @@
 }
 
 - (void)sendDataUpdateNotificationToWatch {
-    [[WCSession defaultSession] sendMessage:@{AW_SESSION_REQUEST_TYPE:@(AWSessionRquestTypeDataUpdateNotification)}  replyHandler:nil errorHandler:nil];
+    [self.session sendMessage:@{AW_SESSION_REQUEST_TYPE:@(AWSessionRquestTypeDataUpdateNotification)} replyHandler:nil errorHandler:nil];
 }
 
 - (BRAppleWatchData*)appleWatchAppData {
@@ -118,16 +123,9 @@
 #pragma mark - data helper methods
 
 - (NSArray*)recentTransactionListFromTransactions:(NSArray*)transactions {
-    BOOL useMockData = true;
     NSMutableArray *transactionListData = [[NSMutableArray alloc] init];
-    if (useMockData) {
-        [transactionListData addObject:[BRAppleWatchTransactionData appleWatchTransactionDataWithAmount:@"ƀ100" amountInlocalCurrency:@"$0.01" date:@"10/10/2015"]];
-        [transactionListData addObject:[BRAppleWatchTransactionData appleWatchTransactionDataWithAmount:@"ƀ200" amountInlocalCurrency:@"$0.02" date:@"10/11/2015"]];
-        [transactionListData addObject:[BRAppleWatchTransactionData appleWatchTransactionDataWithAmount:@"ƀ300" amountInlocalCurrency:@"$0.03" date:@"10/12/2015"]];
-    } else {
-        for ( BRTransaction *transaction in transactions) {
-            [transactionListData addObject:[BRAppleWatchTransactionData appleWatchTransactionDataFrom:transaction]];
-        }
+    for ( BRTransaction *transaction in transactions) {
+        [transactionListData addObject:[BRAppleWatchTransactionData appleWatchTransactionDataFrom:transaction]];
     }
     return transactionListData;
 }

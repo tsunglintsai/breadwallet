@@ -73,13 +73,10 @@
 }
 
 - (NSString*)dateText {
-    // TODO : is there any way to move formatting from BRTxHistoryViewController to here.
     NSDateFormatter *df = [[NSDateFormatter alloc] init];
-    df.dateFormat = dateFormat(@"yyMdja");
-    
+    df.dateFormat = dateFormat(@"Mdja");
     NSTimeInterval t = (self.timestamp > 1) ? self.timestamp :
     [[BRPeerManager sharedInstance] timestampForBlockHeight:self.blockHeight] - 5*60;
-    
     return [[[df stringFromDate:[NSDate dateWithTimeIntervalSinceReferenceDate:t]].lowercaseString
              stringByReplacingOccurrencesOfString:@"am" withString:@"a"]
             stringByReplacingOccurrencesOfString:@"pm" withString:@"p"];
@@ -87,10 +84,8 @@
     
 }
 
-static NSString *dateFormat(NSString *template)
-{
+static NSString *dateFormat(NSString *template) {
     NSString *format = [NSDateFormatter dateFormatFromTemplate:template options:0 locale:[NSLocale currentLocale]];
-    
     format = [format stringByReplacingOccurrencesOfString:@", " withString:@" "];
     format = [format stringByReplacingOccurrencesOfString:@" a" withString:@"a"];
     format = [format stringByReplacingOccurrencesOfString:@"hh" withString:@"h"];

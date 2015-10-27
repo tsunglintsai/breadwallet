@@ -32,48 +32,19 @@ class BRAWWatchDataManager: NSObject, WCSessionDelegate {
     private(set) var lastestTransction : String?
     private(set) var walletStatus = WalletStatus.Unknown
     
+    let session : WCSession =  WCSession.defaultSession()
+    
     override init() {
         super.init()
-        WCSession.defaultSession().delegate = self
-        WCSession.defaultSession().activateSession()
+        session.delegate = self
+        session.activateSession()
     }
     
-    func requestGalanceData() {
-        let messageToSend = [AW_SESSION_REQUEST_TYPE: NSNumber(unsignedInt:AWSessionRquestTypeFetchData.rawValue),
-            AW_SESSION_REQUEST_DATA_TYPE_KEY: NSNumber(unsignedInt:AWSessionRquestDataTypeGlanceData.rawValue)]
-        WCSession.defaultSession().sendMessage(messageToSend, replyHandler: { [unowned self] replyMessage in
-                print("\(replyMessage)")
-                if let data = replyMessage[AW_SESSION_RESPONSE_KEY] as? NSData {
-                    if let appleWatchData = NSKeyedUnarchiver.unarchiveObjectWithData(data) as? BRAppleWatchData {
-                        let previousWalletStatus = self.walletStatus
-                        self.balance = appleWatchData.balance
-                        self.balanceInLocalCurrency = appleWatchData.balanceInLocalCurrency
-                        self.lastestTransction = appleWatchData.lastestTransction
-                        if appleWatchData.hasWallet {
-                            self.walletStatus = .HasSetup
-                        } else {
-                            self.walletStatus = .NotSetup
-                        }
-                        if self.walletStatus != previousWalletStatus {
-                            NSNotificationCenter.defaultCenter().postNotificationName(BRAWWatchDataManager.WalletStatusDidChangeNotification, object: nil)
-                        }
-                        NSNotificationCenter.defaultCenter().postNotificationName(BRAWWatchDataManager.GalanceDataDidUpdateNotification, object: nil)
-                    }
-                }
-            }, errorHandler: {error in
-                self.walletStatus = .CannotConnectToPhone;
-                NSNotificationCenter.defaultCenter().postNotificationName(BRAWWatchDataManager.GalanceDataDidUpdateNotification, object: nil)
-                // catch any errors here
-                print(error)
-            })
-    }
-
     func requestAllData() {
         let messageToSend = [AW_SESSION_REQUEST_TYPE: NSNumber(unsignedInt:AWSessionRquestTypeFetchData.rawValue),
             AW_SESSION_REQUEST_DATA_TYPE_KEY:NSNumber(unsignedInt:AWSessionRquestDataTypeAllData.rawValue)]
-        WCSession.defaultSession().sendMessage(messageToSend, replyHandler: { [unowned self] replyMessage in
+        session.sendMessage(messageToSend, replyHandler: { [unowned self] replyMessage in
             //handle and present the message on screen
-                print("\(replyMessage)")
                 if let data = replyMessage[AW_SESSION_RESPONSE_KEY] as? NSData {
                     if let appleWatchData = NSKeyedUnarchiver.unarchiveObjectWithData(data) as? BRAppleWatchData {
                         print(appleWatchData);
@@ -97,6 +68,37 @@ class BRAWWatchDataManager: NSObject, WCSessionDelegate {
                     }
                 }
             }, errorHandler: {error in
+                self.walletStatus = .CannotConnectToPhone;
+                NSNotificationCenter.defaultCenter().postNotificationName(BRAWWatchDataManager.GalanceDataDidUpdateNotification, object: nil)
+                print(error)
+        })
+    }
+    
+    func requestGalanceData() {
+        let messageToSend = [AW_SESSION_REQUEST_TYPE: NSNumber(unsignedInt:AWSessionRquestTypeFetchData.rawValue),
+            AW_SESSION_REQUEST_DATA_TYPE_KEY: NSNumber(unsignedInt:AWSessionRquestDataTypeGlanceData.rawValue)]
+        session.sendMessage(messageToSend, replyHandler: { [unowned self] replyMessage in
+            print("\(replyMessage)")
+            if let data = replyMessage[AW_SESSION_RESPONSE_KEY] as? NSData {
+                if let appleWatchData = NSKeyedUnarchiver.unarchiveObjectWithData(data) as? BRAppleWatchData {
+                    let previousWalletStatus = self.walletStatus
+                    self.balance = appleWatchData.balance
+                    self.balanceInLocalCurrency = appleWatchData.balanceInLocalCurrency
+                    self.lastestTransction = appleWatchData.lastestTransction
+                    if appleWatchData.hasWallet {
+                        self.walletStatus = .HasSetup
+                    } else {
+                        self.walletStatus = .NotSetup
+                    }
+                    if self.walletStatus != previousWalletStatus {
+                        NSNotificationCenter.defaultCenter().postNotificationName(BRAWWatchDataManager.WalletStatusDidChangeNotification, object: nil)
+                    }
+                    NSNotificationCenter.defaultCenter().postNotificationName(BRAWWatchDataManager.GalanceDataDidUpdateNotification, object: nil)
+                }
+            }
+            }, errorHandler: {error in
+                self.walletStatus = .CannotConnectToPhone;
+                NSNotificationCenter.defaultCenter().postNotificationName(BRAWWatchDataManager.GalanceDataDidUpdateNotification, object: nil)
                 // catch any errors here
                 print(error)
         })
@@ -110,21 +112,7 @@ class BRAWWatchDataManager: NSObject, WCSessionDelegate {
             }
         }
     }
-    
-    func simulateRemoveTransactions() {
-        transactionHistory.removeLast()
-        NSNotificationCenter.defaultCenter().postNotificationName(BRAWWatchDataManager.TransactionDidUpdateNotification, object: nil)
-    }
-    
-    func simulateAddTransactions() {
-        let transactionData = BRAppleWatchTransactionData()
-        transactionData.amountText = "amount"
-        transactionData.amountTextInLocalCurrency = "amount in local"
-        transactionData.dateText = NSDate().description
-        transactionHistory.insert(transactionData, atIndex: transactionHistory.count)
-        NSNotificationCenter.defaultCenter().postNotificationName(BRAWWatchDataManager.TransactionDidUpdateNotification, object: nil)
-    }
-    
+        
     func balanceAttributedString() -> NSAttributedString? {
        if let originalBalanceString = BRAWWatchDataManager.sharedInstance.balance {
             var balanceString = originalBalanceString.stringByReplacingOccurrencesOfString("ƀ", withString: "")
