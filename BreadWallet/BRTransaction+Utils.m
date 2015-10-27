@@ -75,7 +75,7 @@
 - (NSString*)dateText {
     // TODO : is there any way to move formatting from BRTxHistoryViewController to here.
     NSDateFormatter *df = [[NSDateFormatter alloc] init];
-    df.dateStyle = NSDateFormatterMediumStyle;
+    df.dateFormat = dateFormat(@"yyMdja");
     
     NSTimeInterval t = (self.timestamp > 1) ? self.timestamp :
     [[BRPeerManager sharedInstance] timestampForBlockHeight:self.blockHeight] - 5*60;
@@ -85,5 +85,21 @@
             stringByReplacingOccurrencesOfString:@"pm" withString:@"p"];
     
     
+}
+
+static NSString *dateFormat(NSString *template)
+{
+    NSString *format = [NSDateFormatter dateFormatFromTemplate:template options:0 locale:[NSLocale currentLocale]];
+    
+    format = [format stringByReplacingOccurrencesOfString:@", " withString:@" "];
+    format = [format stringByReplacingOccurrencesOfString:@" a" withString:@"a"];
+    format = [format stringByReplacingOccurrencesOfString:@"hh" withString:@"h"];
+    format = [format stringByReplacingOccurrencesOfString:@" ha" withString:@"@ha"];
+    format = [format stringByReplacingOccurrencesOfString:@"HH" withString:@"H"];
+    format = [format stringByReplacingOccurrencesOfString:@"H 'h'" withString:@"H'h'"];
+    format = [format stringByReplacingOccurrencesOfString:@"H " withString:@"H'h' "];
+    format = [format stringByReplacingOccurrencesOfString:@"H" withString:@"H'h'"
+                                                  options:NSBackwardsSearch|NSAnchoredSearch range:NSMakeRange(0, format.length)];
+    return format;
 }
 @end
