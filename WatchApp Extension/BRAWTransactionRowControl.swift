@@ -27,7 +27,11 @@ import WatchKit
 
 class BRAWTransactionRowControl: NSObject {
     
-    @IBOutlet var statusIcon: WKInterfaceImage!
+    @IBOutlet var statusIcon: WKInterfaceImage! {
+        didSet {
+            statusIcon.setImage(nil)
+        }
+    }
     @IBOutlet var amountLabel: WKInterfaceLabel!
     @IBOutlet var dateLabel: WKInterfaceLabel!
     @IBOutlet var seperatorGroup: WKInterfaceGroup!

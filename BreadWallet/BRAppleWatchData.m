@@ -41,6 +41,6 @@
 }
 
 - (NSString*)description {
-    return [NSString stringWithFormat:@"%@,%@,%@,%@,%@,image size:%@",_balance,_balanceInLocalCurrency,_receiveMoneyAddress,_transactions,_lastestTransction,@(_receiveMoneyQRCodeImage.size.height)];
+    return [NSString stringWithFormat:@"%@,%@,%@,%@,%@,image size:%@",_balance,_balanceInLocalCurrency,_receiveMoneyAddress,@([_transactions count]),_lastestTransction,@(_receiveMoneyQRCodeImage.size.height)];
 }
 @end

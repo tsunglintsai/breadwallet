@@ -45,7 +45,8 @@ class BRAWRootInterfaceController: WKInterfaceController {
     override func willActivate() {
         // This method is called when watch view controller is about to be visible to user
         super.willActivate()
-        NSNotificationCenter.defaultCenter().addObserver(self, selector: "walletStatusDidChange", name: BRAWWatchDataManager.WalletStatusDidChangeNotification, object: nil)
+        updateUI()
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "updateUI", name: BRAWWatchDataManager.WalletStatusDidChangeNotification, object: nil)
     }
 
     override func didDeactivate() {
@@ -54,7 +55,6 @@ class BRAWRootInterfaceController: WKInterfaceController {
         NSNotificationCenter.defaultCenter().removeObserver(self)
     }
     
-    func walletStatusDidChange() {
         switch BRAWWatchDataManager.sharedInstance.walletStatus {
         case .Unknown:
             loadingIndicator.setHidden(false)
