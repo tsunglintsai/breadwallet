@@ -27,6 +27,7 @@
 #import "BRPeerManager.h"
 #import "BRWalletManager.h"
 #import "BREventManager.h"
+#import "BRPhoneWCSessionManager.h"
 
 #if BITCOIN_TESTNET
 #pragma message "testnet build"
@@ -74,6 +75,8 @@
 
     //TODO: figure out deterministic builds/removing app sigs: http://www.afp548.com/2012/06/05/re-signining-ios-apps/
 
+    
+    [BRPhoneWCSessionManager sharedInstance];
     return YES;
 }
 
