@@ -16,7 +16,7 @@
     uint64_t received = [manager.wallet amountReceivedFromTransaction:self],
     sent = [manager.wallet amountSentByTransaction:self];
     uint32_t blockHeight = self.blockHeight;
-    uint32_t confirms = ([self blockHeight] > blockHeight) ? 0 : (blockHeight - [self blockHeight]) + 1;
+    uint32_t confirms = ([self lastBlockHeight] > blockHeight) ? 0 : (blockHeight - [self lastBlockHeight]) + 1;
     if (confirms == 0 && ! [manager.wallet transactionIsValid:self]) {
         return BRTransactionTypeInvalid;
     }
@@ -65,7 +65,7 @@
     }
 }
 
-- (uint32_t)blockHeight {
+- (uint32_t)lastBlockHeight {
     static uint32_t height = 0;
     uint32_t h = [BRPeerManager sharedInstance].lastBlockHeight;
     if (h > height) height = h;

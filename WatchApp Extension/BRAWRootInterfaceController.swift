@@ -54,7 +54,7 @@ class BRAWRootInterfaceController: WKInterfaceController {
         super.didDeactivate()
         NSNotificationCenter.defaultCenter().removeObserver(self)
     }
-    
+    func updateUI() {
         switch BRAWWatchDataManager.sharedInstance.walletStatus {
         case .Unknown:
             loadingIndicator.setHidden(false)
