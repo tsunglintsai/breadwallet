@@ -1,8 +1,8 @@
 //
-//  TodayViewController.m
-//  TodayWidget
+//  BRAWReceiveMoneyInterfaceController.swift
+//  BreadWallet
 //
-//  Created by Henry on 6/14/15.
+//  Created by Henry on 10/27/15.
 //  Copyright (c) 2015 Aaron Voisine <voisine@gmail.com>
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy

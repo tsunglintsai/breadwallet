@@ -1,5 +1,5 @@
 //
-//  BRAppGroupConstants.h
+//  BRAppleWatchSharedConstants.h
 //  BreadWallet
 //
 //  Created by Henry Tsai on 10/22/15.
