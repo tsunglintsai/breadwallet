@@ -2,8 +2,8 @@
 //  BRAppleWatchSharedConstants.h
 //  BreadWallet
 //
-//  Created by Henry Tsai on 10/22/15.
-//  Copyright (c) 2013 Aaron Voisine <voisine@gmail.com>
+//  Created by Henry on 10/27/15.
+//  Copyright (c) 2015 Aaron Voisine <voisine@gmail.com>
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
